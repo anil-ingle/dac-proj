@@ -1,0 +1,43 @@
+package com.dac.onlineparking.module.admin;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.dac.onlineparking.module.user.CityAreaVO;
+import com.dac.onlineparking.module.user.RegisterVO;
+import com.dac.onlineparking.util.UserQuery;
+
+@Repository
+public class AdminDAO {
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	public List<CityVO> selectCity() {
+		List<CityVO> cityVOs = jdbcTemplate.query(UserQuery.SELECT_USER_CITY, (ResultSet rs) -> {
+			List<CityVO> cityVOs1 = new ArrayList<CityVO>();
+			while (rs.next()) {
+
+				CityVO cityVO = new CityVO();
+				cityVO.setCityId(rs.getInt("city_id"));
+				cityVO.setCityName(rs.getString("city_name"));
+				cityVOs1.add(cityVO);
+			} // while
+			return cityVOs1;
+		}// extractData(-)
+		);
+
+		return cityVOs;
+	}
+
+	public int register(RegisterVO vo) {
+		return jdbcTemplate.update(UserQuery.REGISTER_USER, vo.getfName(), vo.getlName(), vo.getEmail(),
+				vo.getMobileNumber(), vo.getCurrentTime(), vo.getDob(), vo.getCityId(), vo.getPass(), vo.getGender(),
+				1);
+
+	}
+}

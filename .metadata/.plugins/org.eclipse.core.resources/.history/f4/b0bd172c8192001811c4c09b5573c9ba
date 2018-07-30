@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="user-login.css">
+<script src="../node_modules/toastr/build/toastr.min.js"></script>
+<link rel="stylesheet"
+	href="../node_modules/toastr/build/toastr.min.css">
+<link rel="stylesheet"
+	href="../node_modules/ag-grid/dist/styles/ag-theme-balham.css">
+<style>
+select{
+ position:absolute;
+}
+</style>
+
+<title>Online Parking login</title>
+</head>
+<script src="jquery.min.js"></script>
+<script type="text/javascript" src="user-login.js"></script>
+<script type="text/javascript" src="user-reg.js"></script>
+
+
+
+<body id="y">
+	<div class="main-container">
+		<div class="main-header">
+			<div class="header-menu">
+				<div class="onlineparking-logo">
+					<h1>
+						<a
+							href="http://localhost:2020/OnlineParkingProject/user/user-login.html"
+							title="Go to onlineparking home" class="headline"><u>Online
+								Parking</u></a>
+					</h1>
+				</div>
+				<div class="parking-login">
+					<div>
+						<table cellspacing="0" role="presentation">
+							<tr>
+								<td class="html7magic"><label for="email">Email or
+										Phone</label></td>
+								<td class="html7magic"><label for="pass">Password</label></td>
+							</tr>
+							<tr>
+								<td><input type="email" class="inputtext" name="email"
+									id="email" tabindex="1" data-testid="royal_email" /></td>
+								<td><input type="password" class="inputtext" name="pass"
+									id="pass" tabindex="2" data-testid="royal_pass" /></td>
+								<td><label class="uiButton uiButtonConfirm"
+									id="loginbutton" for="u_0_2"><input value="Log In"
+										aria-label="Log In" tabindex="4"
+										data-testid="royal_login_button" onclick="userLogin()" type="button" id="u_0_2" /></label></td>
+							</tr>
+							<tr>
+								<td class="login_form_label_field"></td>
+								<td class="login_form_label_field"><div>
+										<a
+											href="http://localhost:2020/OnlineParkingProject/user/user-login.html">Forgotten
+											account?</a>
+									</div></td>
+							</tr>
+						</table>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="main-body">
+			<div class="gradientContent">
+				<div class="logo-image">image space</div>
+				<div>
+				<div id="tst"></div>
+					<div>
+						<div class="form-submit-line1">
+							<div class="reg-first-line">
+								<input id="fname"  type="text" class="reg-fname" placeholder="First Name" >
+							</div>
+							<div>
+								<input id="lname" type="text" class="reg-fname" placeholder="Last Name">
+							</div>
+						</div>
+						<div class="form-submit-line2">							<input id="reg-email" type="text" class="reg-email" placeholder="email address">
+						</div>
+						<div class="form-submit-line3">
+							<input id="reg-pass" type="password" class="reg-pass" placeholder="new password">
+						</div>
+						<div class="form-submit-line3">
+							<input id="reg-mob" type="text" class="reg-pass" placeholder="Mobile Number">
+						</div>
+						<div class="form-submit-line4">
+							<div class="date-gender-div">
+								<input id="dob" type="date" class="reg-date">
+							</div>
+							<div class="rd-btn">
+								<input id="male" type="radio" name="gender" value="male"> <label
+									id="lb1">Male</label> <input id="fmale" type="radio" name="gender"
+									value="female"><label id="lb2"> Female</label>
+							</div>
+						</div>
+						<div class="select-city-area-reg">
+							<div id="cityDiv">
+
+								<select   class="selectSize" name="city" id="city">
+									<!-- <option value=''>Select City</option> -->
+								</select><br>
+							</div>
+
+							<div>
+								<input onclick='formSubmit()' type="button" class="reg-btn-sub" value="Sign-Up">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

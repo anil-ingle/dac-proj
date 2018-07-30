@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Wallet</title>
+    <link rel="stylesheet" href="user.css">
+    
+    <style>
+        .wollet-container {
+            widows: 500;
+            position: absolute;
+            top: 100px;
+
+        }
+
+        .wollet_heading {
+            width: 100%;
+        }
+
+        h2 {
+            color: #424d42;
+
+        }
+
+
+
+        label {
+            font-size: 24px;
+            /* font-size: larger; */
+            font-family: sans-serif;
+            font-style: initial;
+            color: darkolivegreen;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex: 1 1 0%;
+            /* align-items: center; */
+            justify-content: center;
+            font-size: 1.5em;
+            color: purple;
+            background: linear-gradient(154deg, #e0e6ec, #273542);
+            background-color: transparent !important;
+        }
+
+        input {
+            width: 300px;
+            height: 32px;
+            padding-left: 20px;
+            font-size: 20px;
+            font-style: normal;
+            color: #273542;
+        }
+
+
+        input:focus {
+            outline: none;
+        }
+
+        .add_money {
+            padding-top: 10px;
+        }
+
+        div {
+            padding-top: 5px;
+        }
+
+        .btn-add-money {
+            height: 40px;
+            background: #167516;
+            align-items: center;
+            font-size: initial;
+            width: -webkit-fill-available;
+            width: -moz-available;
+            color: whitesmoke;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="rederect.js"></script>
+    <script type="text/javascript" src="../header.js"></script>
+    <script>
+        // window.onload="myFunction()";
+        function addMoney() {
+            alert("This Feature Comming soon...!!!");
+        }
+       
+        function myFunction(){
+        	let _user = JSON.parse(sessionStorage.getItem('user'));
+        	if(_user){
+        		
+        		 document.getElementById("name").value = _user.user.fName+" "+_user.lName;
+                 document.getElementById("email").value = _user.email;
+                 document.getElementById("mobileNumber").value = _user.mobileNumber;
+                 document.getElementById("balance").value = _user.amount;
+        	}
+           
+        }
+        
+
+
+    </script>
+</head>
+
+<body onload="myFunction()">
+ <div id="hdr" class="header"></div>
+    <div class="container">
+   
+        <div class="wallet-container">
+            <div class="wollet_heading">
+                <h2>My Wallet</h2>
+            </div>
+            <div>
+                <label>Name</label>
+                <br/>
+                <input style="border:none" id="name" type="text"  readonly/>
+            </div>
+            <div>
+                <label>Email</label>
+                <br/>
+                <input style="border:none" id="email" type="text"  readonly/>
+            </div>
+            <div>
+                <label>Mobile Number</label>
+                <br/>
+                <input style="border:none" id="mobileNumber" type="text" readonly/>
+            </div>
+            <div>
+                <label>Balance</label>
+                <br/>
+                <input style="border:none" id="balance" type="text"  readonly/>
+            </div>
+            <div class="add_money">
+                <button class="btn-add-money" onclick="addMoney();">Add Money</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

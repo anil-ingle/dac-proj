@@ -1,0 +1,12 @@
+INDEX VERSION 1.4+/home/anil/dac-proj/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+1048590704.index
+1897804560.index
+1187263073.index
+1703603574.index
+4133902140.index
+1362773451.index
+598308029.index
+899920120.index
+478609174.index
+291712090.index
+4108620899.index

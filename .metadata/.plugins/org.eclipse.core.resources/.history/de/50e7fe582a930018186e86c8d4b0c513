@@ -1,0 +1,5 @@
+package com.dac.onlineparking.module.user;
+
+public class UserController {
+
+}

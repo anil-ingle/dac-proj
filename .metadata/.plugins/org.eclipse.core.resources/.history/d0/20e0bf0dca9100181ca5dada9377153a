@@ -1,0 +1,5 @@
+package com.dac.onlineparking.util;
+
+public class JsonUtil {
+
+}

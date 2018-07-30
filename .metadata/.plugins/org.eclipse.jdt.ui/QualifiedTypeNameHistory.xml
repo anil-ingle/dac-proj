@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
+<fullyQualifiedTypeName name="com.dac.onlineparking.module.exception.OnlineParkingGlobalException"/>
+<fullyQualifiedTypeName name="java.sql.SQLException"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="javax.activation.DataSource"/>
+<fullyQualifiedTypeName name="com.dac.onlineparking.util.UserQuery"/>
+<fullyQualifiedTypeName name="com.dac.onlineparking.module.login.LoginVO"/>
+<fullyQualifiedTypeName name="com.dac.onlineparking.module.login.LoginStatusVO"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
+</qualifiedTypeNameHistroy>

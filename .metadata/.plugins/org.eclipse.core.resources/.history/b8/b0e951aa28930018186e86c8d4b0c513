@@ -1,0 +1,5 @@
+package com.dac.onlineparking.module.admin;
+
+public class CityAreaVO {
+
+}

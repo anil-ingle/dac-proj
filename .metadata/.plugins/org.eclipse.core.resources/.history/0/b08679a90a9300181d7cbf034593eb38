@@ -1,0 +1,283 @@
+.main-container {
+	height: 100%;
+	width: 100%%          
+display:flex;
+	background: transparent;
+}
+
+.main-header {
+	width: 100%;
+	height: 82px;
+	/* background-color: #3b5998;
+	background-image: linear-gradient(#4e69a2, #3b5998 50%); */
+	background: linear-gradient(154deg,#008fe2,#00b29c);
+    background-color: transparent !important;
+	border-bottom: 1px solid #133783;
+	min-height: 42px;
+	position: relative;
+	z-index: 1;
+}
+
+.onlineparking-logo {
+	
+}
+
+.parking-login {
+	
+}
+
+#h1 {
+	font-size: 14px;
+	width: 170px;
+}
+
+.header-menu {
+	margin: 0 auto;
+	padding-top: 13px;
+	width: 980px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.headline {
+	width: 170px;
+	height: 34px;
+	background-position: 0 0;
+	text-decoration: none;
+	justify-content: space-around;
+}
+
+a {
+	color: #fefefe;;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+u {
+	text-decoration: none;
+}
+
+.parking-login table tr td {
+	padding: 0 0 0 14px;
+}
+
+td, td.label {
+	text-align: left;
+}
+
+.parking-login {
+	font-family: inherit;
+}
+
+.html7magic {
+	padding-bottom: 4px;
+}
+
+.html7magic label {
+	color: #fff;
+	font-weight: normal;
+	padding-left: 1px;
+}
+
+.parking-login .inputtext, .parking-login .inputpassword {
+	border-color: #1d2a5b;
+	margin: 0;
+	width: 142px;
+}
+
+.inputtext, .inputpassword {
+	padding-bottom: 4px;
+}
+
+textarea {
+	font-family: inherit;
+}
+
+.parking-login .login_form_label_field {
+	padding-top: 4px;
+}
+
+.parking-login .html7magic label {
+	color: #fff;
+	font-weight: normal;
+	padding-left: 1px;
+}
+
+body, button, input, label, select, td, textarea {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	
+}
+
+label {
+	color: #666;
+	cursor: default;
+	font-weight: 600;
+	vertical-align: middle;
+}
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+textarea, .inputtext, .inputpassword {
+	border: 1px solid #bdc7d8;
+	margin: 0;
+	padding: 3px;
+	-webkit-appearance: none;
+	-webkit-border-radius: 0;
+}
+
+.uiButtonConfirm {
+	background-color: #4267b2;
+	border-color: #29487d;
+}
+
+.uiButton, .uiButtonSuppressed:active, .uiButtonSuppressed:focus,
+	.uiButtonSuppressed:hover {
+	background-color: #f6f7f9;
+	border: 1px solid #ced0d4;
+}
+
+.uiButtonText, .uiButton input {
+	border: 0;
+	color: #4b4f56;
+	cursor: pointer;
+	display: inline-block;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 18px;
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+}
+
+.main-body {
+	width: 100%;
+	height: 100%;;
+	background: linear-gradient(white, #D3D8E8);
+}
+
+body {
+	background: #fff;
+	color: #1d2129;
+	direction: ltr;
+	line-height: 1.34;
+	margin: 0;
+	padding: 0;
+	unicode-bidi: embed;
+}
+
+.form-submit-line1 {
+	display: flex;
+}
+
+.gradientContent {
+	margin: 0 auto;
+	width: 980px;
+	display: flex;
+	justify-content: space-around;
+	padding-top: 30px;
+}
+
+.logo-image {
+	width: -webkit-fill-available;
+	background-color: lavender;
+	height: -webkit-fill-available;
+	background-image: url("nature-p.jpg");
+	margin: 0px 10px 0px -5px;
+}
+
+.reg-fname {
+	width: 170px;
+	padding: 5px;
+    font-size: large;
+}
+
+.reg-first-line {
+	padding-right: 10px;
+}
+
+input::-webkit-input-placeholder {
+	font-size: 20px;
+	/*  line-height: 3; */
+}
+
+.reg-email {
+	padding: 5px;
+    font-size: large;
+	width: -webkit-fill-available;
+}
+
+.form-submit-line2 {
+	padding-top: 20px;
+}
+
+.form-submit-line3 {
+	padding-top: 20px;
+}
+
+.reg-pass {
+	padding: 5px;
+    font-size: large;
+	width: -webkit-fill-available;
+}
+
+.date-gender-div {
+	adding-right: 12px;
+}
+
+.form-submit-line4 {
+	display: flex;
+	justify-content: space-evenly;
+	padding-top: 20px;
+}
+
+.reg-date {
+	padding: 5px;
+    
+}
+
+#lb1, #lb2 {
+	font-size: 20px;
+}
+
+.rd-btn {
+	padding-top: 8px;
+}
+
+.reg-btn-sub {
+	padding: 10px 25px 10px 25px;
+	background-color: green;
+	color: white;
+	font-size: 13px;
+	margin: 5px;
+	float: right;
+	    cursor: pointer;
+}
+
+.form-submit-line5 {
+	padding: 20px 25px 0px 0px;
+}
+
+.select-city-area-reg {
+	padding-top: 20px;
+	padding-left: 25px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.selectSize {
+	padding: 12px 10px 10px 10px;
+	width: 148px;
+	background-color: white;
+	font-size: 15px;
+}
+
+::-webkit-datetime-edit-year-field:not([aria-valuenow]),
+::-webkit-datetime-edit-month-field:not([aria-valuenow]),
+::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
+    color: transparent;
+}

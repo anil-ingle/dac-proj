@@ -1,0 +1,5 @@
+package com.dac.onlineparking.module.login;
+
+public class LoginVO {
+
+}

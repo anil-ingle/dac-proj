@@ -1,0 +1,33 @@
+package com.dac.onlineparking.module.user;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.dac.onlineparking.util.UserQuery;
+
+@Repository
+public class UserDAO {
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	public List<CityAreaVO> selectCityArea(int areaId) {
+		List<CityAreaVO> areaVOs = jdbcTemplate.query(UserQuery.SLECT_CITY_AREA, (ResultSet rs) -> {
+			List<CityAreaVO> areaVOs1 = new ArrayList<CityAreaVO>();
+			while (rs.next()) {
+				CityAreaVO areaVO = new CityAreaVO();
+				areaVO.setAreaId(rs.getInt("area_id"));
+				areaVO.setAreaName(rs.getString("area_name"));
+				areaVOs1.add(areaVO);
+			} // while
+			return areaVOs1;
+		}// extractData(-)
+				, areaId);
+
+		return areaVOs;
+	}
+}

@@ -1,0 +1,51 @@
+package com.dac.onlineparking.module.admin;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.dac.onlineparking.module.user.CityAreaVO;
+import com.dac.onlineparking.util.UserQuery;
+
+@Repository
+public class AdminDAO {
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	public List<CityVO> selectCity() {
+		List<CityVO> cityVOs = jdbcTemplate.query(UserQuery.SELECT_USER_CITY, (ResultSet rs) -> {
+			List<CityVO> cityVOs1 = new ArrayList<CityVO>();
+			while (rs.next()) {
+
+				CityVO cityVO = new CityVO();
+				cityVO.setCityId(rs.getInt("city_id"));
+				cityVO.setCityName(rs.getString("city_name"));
+				cityVOs1.add(cityVO);
+			} // while
+			return cityVOs1;
+		}// extractData(-)
+		);
+
+		return cityVOs;
+	}
+
+	public List<CityAreaVO> selectCityArea(int areaId) {
+		List<CityAreaVO> areaVOs = jdbcTemplate.query(UserQuery.SLECT_CITY_AREA, (ResultSet rs) -> {
+			List<CityAreaVO> areaVOs1 = new ArrayList<CityAreaVO>();
+			while (rs.next()) {
+				CityAreaVO areaVO = new CityAreaVO();
+				areaVO.setAreaId(rs.getInt("area_id"));
+				areaVO.setAreaName(rs.getString("area_name"));
+				areaVOs1.add(areaVO);
+			} // while
+			return areaVOs1;
+		}// extractData(-)
+				, areaId);
+
+		return areaVOs;
+	}
+}

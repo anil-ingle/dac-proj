@@ -1,0 +1,31 @@
+server.port=2020
+server.servlet.context-path=/onlineparking
+#server.tomcat.max-threads=50
+#server.tomcat.max-connections=50
+
+server.tomcat.basedir=./conf/tomcat
+server.tomcat.accesslog.enabled=true
+server.tomcat.accesslog.pattern=%t %a "%r" %s (%D ms)
+#https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0.0-M1-Configuration-Changelog
+#https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html
+#https://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html
+# ***ENV properties: https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html#howto-discover-build-in-options-for-external-properties
+# ***Servlet Filter Set up
+# Server request authentications/Spring Security/Error Pages/Messages to User
+# Logging configuration using logback.xml. ConsoleAppender and RollingFileAppender
+# ***Build/Jenkins Set up
+spring.datasource.type=com.zaxxer.hikari.HikariDataSource
+spring.datasource.url=jdbc:mysql://localhost:3306/onlineparking
+### Hikari Settings
+spring.datasource.hikari.connection-timeout=10000
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.pool-name=constituency-summary
+
+logging.file=./conf/logs/onlineparking.log
+#logging.config=logback.xml
+logging.level.org.springframework.web=INFO
+logging.level.org.springframework.jdbc=INFO
+
+#Skip the empty objects
+spring.jackson.serialization.FAIL_ON_EMPTY_BEANS=false
+
