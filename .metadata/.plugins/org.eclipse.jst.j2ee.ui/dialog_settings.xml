@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="false" key="J2EE_EXPORT_OVERWRITE"/>
+	<item value="false" key="J2EE_EXPORT_SOURCE"/>
+	<list key="J2EE_EXPORT_JST_WEB">
+		<item value="/home/anil/software/apache-tomcat-8.5.32/webapps/onlineparking.war"/>
+		<item value="/home/anil/Desktop/onlineparking.war"/>
+	</list>
+</section>
