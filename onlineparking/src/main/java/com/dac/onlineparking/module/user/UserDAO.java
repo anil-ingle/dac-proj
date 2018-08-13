@@ -39,7 +39,7 @@ public class UserDAO {
 			List<UserBookSlotVO> bookSlotVO1 = new ArrayList<UserBookSlotVO>();
 			while (rs.next()) {
 				UserBookSlotVO vo = new UserBookSlotVO();
-				vo.setfSlotId(rs.getInt("id"));
+				vo.setSlotId(rs.getInt("id"));
 				vo.setSlotNumber(rs.getInt("slot_number"));
 				vo.setIsReserved(rs.getInt("is_reserved"));
 				vo.setfSlotId(rs.getInt("fslot_id"));
