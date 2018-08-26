@@ -1,6 +1,5 @@
 package com.dac.onlineparking.module.login;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +21,23 @@ public class LoginService {
 
 		}
 		return loginStatusVO;
+	}
+
+	public Boolean isEmailValid(String email) {
+		Integer count = loginDAO.isEmailValid(email);
+		if (count == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean resetPassword(String email, String password) {
+		int status = loginDAO.resetPassword(email, password);
+		if (status == 1)
+			return true;
+		else
+			return false;
 	}
 
 }

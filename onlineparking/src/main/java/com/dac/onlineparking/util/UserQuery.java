@@ -2,7 +2,9 @@ package com.dac.onlineparking.util;
 
 public class UserQuery {
 	public static final String SELECT_USER_CITY = "SELECT city_id,city_name FROM cities";
+	
 	public static final String SELECT_LOGIN_QUERY = "SELECT * FROM login_table where user_name=? and password=?";
+	
 	public static final String SELECT_USER_CITY1 = "SELECT city_id,city_name FROM cities";
 
 	public static final String SLECT_CITY_AREA = "select area_id,area_name from cityarea where city_id=?";
@@ -26,5 +28,12 @@ public class UserQuery {
 	public static final String OWNER_RECORD = "insert into ownercreditrecord (userId,date,amount,ownerId,isCancel) values (?,?,?,?,?)";
 
 	public static final String USER_BOOK_HISTORY = "insert into userbookhistory (userId,slotnumber,areaId,amount,timetaken,date) values(?,?,?,?,?,?)";
+
+	public static final String USER_WALLET_MONEY = "select id,totalamount from userwolet where userId=?";
+	
+	public static final String IS_EMAIL_VALID="select count(*) from user_info where email=?";
+	
+	public static final String RESET_PASSWORD="update user_info set password=? where email=?";
+	
 
 }

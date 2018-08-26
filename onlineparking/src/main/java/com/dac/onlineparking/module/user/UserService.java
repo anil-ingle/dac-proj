@@ -30,4 +30,8 @@ public class UserService {
 			return false;
 		}
 	}
+
+	public WalletMoneyVO walletMoney(int userId) {
+		return userDAO.walletMoney(userId);
+	}
 }

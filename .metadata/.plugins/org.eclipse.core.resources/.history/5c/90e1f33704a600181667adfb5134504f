@@ -1,0 +1,36 @@
+package com.dac.onlineparking.util;
+
+public class UserQuery {
+	public static final String SELECT_USER_CITY = "SELECT city_id,city_name FROM cities";
+	
+	public static final String SELECT_LOGIN_QUERY = "SELECT * FROM login_table where user_name=? and password=?";
+	
+	public static final String SELECT_USER_CITY1 = "SELECT city_id,city_name FROM cities";
+
+	public static final String SLECT_CITY_AREA = "select area_id,area_name from cityarea where city_id=?";
+
+	public static final String SELECT_AREASLOT = "select id,slot_number,is_reserved,fslot_id from onlineparking.tab_slot_datail where fslot_id=(select slot_id from tab_slot where area_id=?)";
+
+	public static final String REGISTER_USER = "insert into user_info (fname,lname,email,mobileNumber,createdDate,dob,cityId,password,gender,roll) values(?,?,?,?,?,?,?,?,?,?)";
+
+	public static final String LOGIN_USSER = "select r.id,r.roll,r.fname,r.lname,r.email,r.mobileNumber,r.password,r.gender,w.totalamount from user_info as r inner join userwolet w where email=? and password=? and r.id=w.userId";
+
+	public static final String CREATE_USER_WOLET = "insert into userwolet (totalAmount,userId) values(?,?)";
+
+	public static final String BOOK_SLOTS = "UPDATE tab_slot_datail SET is_reserved = 1  where fslot_id=(select slot_id from tab_slot where area_id=?) and slot_number=?";
+
+	public static final String USER_WOLLET_DEDUCTION = "update userwolet set totalamount=? where userId=?";
+
+	public static final String CREDIT_OWNER_WOLLET = "update ownerwolet set amount=? where ownerId=?";
+
+	public static final String OWNER_WOLET_AMOUNT = "select amount,ownerId from ownerwolet where ownerId=(select id  from ownerinfo where parkingAreaId=?)";
+
+	public static final String OWNER_RECORD = "insert into ownercreditrecord (userId,date,amount,ownerId,isCancel) values (?,?,?,?,?)";
+
+	public static final String USER_BOOK_HISTORY = "insert into userbookhistory (userId,slotnumber,areaId,amount,timetaken,date) values(?,?,?,?,?,?)";
+
+	public static final String USER_WALLET_MONEY = "select id,totalamount from userwolet where userId=?";
+	
+	public static final String OWNER_PROFILE_ADDRESS="select o.id,o.houseNumber,o.age,o.districtName,o.talukaName,o.villageName,o.caste,o.category,o.parkingAreaId from ownerinfo o where userId=?";	
+
+}

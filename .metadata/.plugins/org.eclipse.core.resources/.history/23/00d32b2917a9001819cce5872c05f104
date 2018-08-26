@@ -1,0 +1,32 @@
+package com.dac.onlineparking.module.login;
+
+public class ForgetPasswordInfoVO {
+	private String email;
+	private String otp;
+	private String key;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+}

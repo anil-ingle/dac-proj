@@ -35,4 +35,10 @@ public class UserController {
 			throws SQLException {
 		return userService.slotBookUsingWolet(bookVO);
 	}
+
+	@RequestMapping(value = "mvc/walletMoney", method = RequestMethod.GET)
+	public @ResponseBody WalletMoneyVO walletMoney(HttpServletRequest request, @RequestParam("userId") int userId)
+			throws SQLException {
+		return userService.walletMoney(userId);
+	}
 }

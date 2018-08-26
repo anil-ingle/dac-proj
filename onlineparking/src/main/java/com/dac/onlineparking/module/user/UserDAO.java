@@ -152,7 +152,6 @@ public class UserDAO {
 			return null;
 
 	}
-	
 
 	private boolean slotBook(String bookedSlots, Integer areaId) throws SQLException {
 		List<Integer> ids = CommonUtil.csvIds(bookedSlots);
@@ -173,4 +172,15 @@ public class UserDAO {
 		return flag;
 
 	}
+
+	public WalletMoneyVO walletMoney(int userId) {
+		WalletMoneyVO vo = jdbcTemplate.queryForObject(UserQuery.USER_WALLET_MONEY, (ResultSet rs, int index) -> {
+			WalletMoneyVO evo = new WalletMoneyVO();
+			evo.setWalletId(rs.getInt("id"));
+			evo.setTotalAmount(rs.getDouble("totalamount"));
+			return evo;
+		}// mapRow
+				, userId);
+		return vo;
+	}// method
 }

@@ -46,4 +46,13 @@ public class LoginDAO {
 			return null;
 	}
 
+	public Integer isEmailValid(String email) {
+		Object[] inputs = new Object[] { email };
+		return jdbcTemplate.queryForObject(UserQuery.IS_EMAIL_VALID, inputs, Integer.class);
+
+	}
+
+	public int resetPassword(String email, String password) {
+		return jdbcTemplate.update(UserQuery.RESET_PASSWORD, password, email);
+	}
 }
