@@ -1,0 +1,58 @@
+package com.dac.onlineparking.module.login;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.dac.onlineparking.util.UserQuery;
+
+@Repository
+public class LoginDAO {
+//	@Autowired
+//	private DataSource dataSource;
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	public LoginVO login(String userName, String password) {
+
+		List<LoginVO> listVOs = jdbcTemplate.query(UserQuery.LOGIN_USSER, (ResultSet rs) -> {
+
+			List<LoginVO> list = new ArrayList<>();
+			while (rs.next()) {
+				LoginVO vo = new LoginVO();
+				vo.setId(rs.getInt("id"));
+				vo.setfName(rs.getString("fname"));
+				vo.setlName(rs.getString("lname"));
+				vo.setEmail(rs.getString("email"));
+				vo.setRoll(rs.getInt("roll"));
+				vo.setGender(rs.getString("gender"));
+				vo.setMobileNumber(rs.getString("mobileNumber"));
+				vo.setTotalAmount(rs.getDouble("totalamount"));
+				list.add(vo);
+			} // while
+			return list;
+		}// extractData(-)
+				, userName, password);
+		System.out.println("size  " + listVOs.size());
+		if (listVOs.size() == 1)
+			return listVOs.get(0);
+
+		else
+			return null;
+	}
+
+	public Integer isEmailValid(String email) {
+		Object[] inputs = new Object[] { email };
+		return jdbcTemplate.queryForObject(UserQuery.IS_EMAIL_VALID, inputs, Integer.class);
+
+	}
+
+	public int resetPassword(String email, String password) {
+		return jdbcTemplate.update(UserQuery.RESET_PASSWORD, password, email);
+	}
+}

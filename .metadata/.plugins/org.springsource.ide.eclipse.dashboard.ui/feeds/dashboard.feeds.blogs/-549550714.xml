@@ -5,7 +5,744 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-08-23T00:00:00Z</updated>
+  <updated>2018-08-31T16:34:46Z</updated>
+  <entry>
+    <title>Spring Boot for Apache Geode &amp; Pivotal GemFire 1.0.0.M2 Released!</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/31/spring-boot-for-apache-geode-pivotal-gemfire-1-0-0-m2-released" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>John Blum</name>
+    </author>
+    <id>tag:spring.io,2018-08-31:3380</id>
+    <updated>2018-08-31T16:34:46Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;On behalf of the team and the community, I am pleased to announce the release of Spring Boot for Apache Geode and Pivotal GemFire &lt;code&gt;1.0.0.M2&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;In summary this release brings the following improvements:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Auto-configuration support for Spring Session when using &lt;a href="http://geode.apache.org"&gt;Apache Geode&lt;/a&gt;, &lt;a href="https://pivotal.io/pivotal-gemfire"&gt;Pivotal GemFire&lt;/a&gt; or &lt;a href="https://pivotal.io/platform/services-marketplace/data-management/pivotal-cloud-cache"&gt;Pivotal Cloud Cache (PCC)&lt;/a&gt; to manage and store your Spring Boot application&amp;#8217;s (HTTP) Session state.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Recognition of &lt;code&gt;spring.cache.type&lt;/code&gt; when using Spring&amp;#8217;s &lt;a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#cache"&gt;Cache Abstraction&lt;/a&gt; auto-configured with Spring Boot.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Additions and improvements to the documentation.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Upgrades to Spring Framework &lt;code&gt;5.0.8.RELEASE&lt;/code&gt;, Spring Boot &lt;code&gt;2.0.4.RELEASE&lt;/code&gt; and Spring Data &lt;code&gt;Kay-SR9&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;This release builds on the &lt;a href="https://spring.io/blog/2018/08/30/spring-session-for-apache-geode-pivotal-gemfire-2-0-5-release-and-2-1-0-m1-released"&gt;recently minted&lt;/a&gt; Spring Session for Apache Geode/Pivotal GemFire (SSDG) &lt;code&gt;2.0.5.RELEASE&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;1 of the key additions to SSDG was to enable dynamic configuration of Spring Session with Apache Geode/Pivotal GemFire/PCC using Properties along with a new &lt;code&gt;SpringSessionGemFireConfigurer&lt;/code&gt; callback interface. That way, even in the context of Spring Boot&amp;#8217;s auto-configuration, users have the ability to customize the configuration to meet their application requirements.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="geode.boot-session-properties"&gt;&lt;a class="anchor" href="#geode.boot-session-properties"&gt;&lt;/a&gt;Configuration with Properties&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;In addition to the Properties discussed &lt;a href="https://spring.io/blog/2018/08/30/spring-session-for-apache-geode-pivotal-gemfire-2-0-5-release-and-2-1-0-m1-released#geode-session-configuration-properties"&gt;here&lt;/a&gt; and documented &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/reference/html5/#httpsession-gemfire-configuration-properties"&gt;here&lt;/a&gt;, Spring Boot for Apache Geode &amp;amp; Pivotal GemFire additionally recognizes the following properties:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;spring.session.timeout&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;server.servlet.session.timeout&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Still, &lt;code&gt;spring.session.data.gemfire.session.expiration.max-inactive-interval-seconds&lt;/code&gt; takes precedence over &lt;code&gt;spring.session.timeout&lt;/code&gt;, which takes precedence over &lt;code&gt;server.servlet.session.timeout&lt;/code&gt; if any combination of these properties are set.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Spring Boot for Apache Geode/Pivotal GemFire additionally recognizes and respects &lt;code&gt;spring.session.store-type&lt;/code&gt;.  However, and unfortunately, this property cannot be set to either &lt;code&gt;gemfire&lt;/code&gt; or &lt;code&gt;geode&lt;/code&gt; as these values are not recognized as a valid (&lt;a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/session/StoreType.html"&gt;enumerated&lt;/a&gt;) values by Spring Boot itself.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="geode-boot-session-configurer"&gt;&lt;a class="anchor" href="#geode-boot-session-configurer"&gt;&lt;/a&gt;Configuration using a Configurer&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Spring Boot for Apache Geode &amp;amp; Pivotal GemFire adds nothing beyond what is already provided by Spring Session for Apache Geode/Pivotal GemFire with respect to the new &lt;code&gt;SpringSessionGemFireConfigurer&lt;/code&gt; call back interface, as discussed &lt;a href="https://spring.io/blog/2018/08/30/spring-session-for-apache-geode-pivotal-gemfire-2-0-5-release-and-2-1-0-m1-released#geode-session-configuration-configurer"&gt;here&lt;/a&gt; and documented &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/reference/html5/#httpsession-gemfire-configuration-configurer"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="geode-boot-next"&gt;&lt;a class="anchor" href="#geode-boot-next"&gt;&lt;/a&gt;What&amp;#8217;s Next&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Next up, Spring Boot for Apache Geode &amp;amp; Pivotal GemFire will provide OOTB &lt;code&gt;HealthIndicators&lt;/code&gt; to assess and monitor the runtime health of your Apache Geode/Pivotal GemFire powered Spring Boot applications.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;More information about Spring Boot &lt;code&gt;HealthIndicators&lt;/code&gt; can be found &lt;a href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html#production-ready-health"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;This will be available in next release, &lt;code&gt;1.0.0.M3&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Even longer term, we are planning to add support for Spring Boot Actuator.  There is an effort underway to retrofit Apache Geode/Pivotal GemFire&amp;#8217;s Stats architecture with &lt;a href="https://micrometer.io/"&gt;Micrometer&lt;/a&gt;.  This will serve as the basis for Spring Boot for Apache Geode &amp;amp; Pviotal GemFire&amp;#8217;s Actuator support.  This will most likely be available in SBDG 1.1.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="geode-boot-feedback"&gt;&lt;a class="anchor" href="#geode-boot-feedback"&gt;&lt;/a&gt;Feedback&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Try it out!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;You can get the new Spring Boot for Apache Geode or Pivotal GemFire bits from Spring&amp;#8217;s &lt;a href="http://repo.spring.io/libs-milestone/org/springframework/geode/spring-geode-starter/1.0.0.M2/"&gt;libs-milestone&lt;/a&gt; Repository and begin building Apache Geode/Pivotal GemFire powered Spring Boot applications by including the following dependency:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;org.springframework.geode:spring-geode-starter&lt;/code&gt; (Apache Geode)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;org.springframework.geode:spring-gemfire-starter&lt;/code&gt; (Pivotal GemFire/PCC)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Any feedback and/or contributions are always welcomed and appreciated: &lt;a href="https://github.com/spring-projects/spring-boot-data-geode/issues"&gt;Issues&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot-data-geode/pulls"&gt;PR&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-boot"&gt;StackOverflow&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;hr&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Also be sure to checkout &lt;a href="https://springoneplatform.io/"&gt;SpringOne Platform&lt;/a&gt; this year.  There is a lot of great &lt;a href="https://springoneplatform.io/2018/sessions"&gt;content&lt;/a&gt; and &lt;a href="https://springoneplatform.io/2018/speakers"&gt;speakers&lt;/a&gt;.  Plus, &lt;strong&gt;Luke Shannon&lt;/strong&gt; and I will be presenting on &lt;a href="https://springoneplatform.io/2018/sessions/scaling-spring-boot-applications-in-real-time"&gt;"&lt;em&gt;Scaling Spring Boot Application in Real-Time&lt;/em&gt;"&lt;/a&gt;, where we will be showcasing this project and much more.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Session for Apache Geode/Pivotal GemFire 2.0.5.RELEASE and 2.1.0.M1 Released!</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/30/spring-session-for-apache-geode-pivotal-gemfire-2-0-5-release-and-2-1-0-m1-released" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>John Blum</name>
+    </author>
+    <id>tag:spring.io,2018-08-30:3379</id>
+    <updated>2018-08-30T20:57:40Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;On behalf of the team as well as the community, I am pleased to announce the release of Spring Session for Apache Geode &amp;amp; Pivotal GemFire (SSDG) &lt;code&gt;2.0.5.RELEASE&lt;/code&gt; (&lt;strong&gt;Apple&lt;/strong&gt;) and &lt;code&gt;2.1.0.M1&lt;/code&gt; (&lt;strong&gt;Bean&lt;/strong&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;SSDG &lt;code&gt;2.0.5.RELEASE&lt;/code&gt; is based on Spring Session &lt;code&gt;2.0.5.RELEASE&lt;/code&gt;, Spring Data &lt;code&gt;Kay-SR9&lt;/code&gt; and Spring Framework &lt;code&gt;5.0.8.RELEASE&lt;/code&gt; and is available in &lt;a href="https://search.maven.org/search?q=spring-session-data-geode"&gt;Maven Central&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;SSDG &lt;code&gt;2.1.0.M1&lt;/code&gt; is based on Spring Session &lt;code&gt;2.1.0.M2&lt;/code&gt;, Spring Data &lt;code&gt;Lovelace-RC2&lt;/code&gt; and Spring Framework &lt;code&gt;5.1.0.RC2&lt;/code&gt; and is available from Spring &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/session/spring-session-data-geode/"&gt;libs-milestone&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Both releases bring with it a new way to configure Spring Session when using either &lt;a href="http://geode.apache.org/"&gt;Apache Geode&lt;/a&gt; or &lt;a href="https://pivotal.io/pivotal-gemfire"&gt;Pivotal GemFire&lt;/a&gt;, or even &lt;a href="https://pivotal.io/platform/services-marketplace/data-management/pivotal-cloud-cache"&gt;Pivotal Cloud Cache (PCC)&lt;/a&gt;, to manage your Spring Boot Web application&amp;#8217;s (HTTP) Session state.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Currently, to enable (HTTP) Session state management using Spring Session with either Apache Geode or Pivotal GemFire as your provider, you would include either &lt;code&gt;org.springframework.session:spring-session-data-geode&lt;/code&gt; or &lt;code&gt;org.springframework.session:spring-session-data-gemfire&lt;/code&gt; on your Spring Boot application classpath, and then declare &lt;code&gt;@EnableGemFireHttpSession&lt;/code&gt; annotation on 1 of your application&amp;#8217;s &lt;code&gt;@Configuration&lt;/code&gt; classes, as follows:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-java" data-lang="java"&gt;@SpringBootApplication
+@EnableGemFireHttpSession(maxInactiveIntervalSeconds=600)
+public class MyWebApplication {
+
+  public static void main(String[] args) {
+    SpringApplication.run(MyWebApplication.class, args);
+  }
+...
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/api/org/springframework/session/data/gemfire/config/annotation/web/http/EnableGemFireHttpSession.html"&gt;@EnableGemFireHttpSession&lt;/a&gt; annotation includes several attributes to alter the configuration of your session management strategy (such as expiration; shown above) as well as the data management policies and indexes used by either Apache Geode or Pivotal GemFire to effectively manage session state.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;However, all of these attributes must be hard coded. What if you want to change the configuration during deployment, based on the environment?  Perhaps you want to vary the configuration using Spring profiles.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Well, now you can dynamically configure Spring Session when using either Apache Geode or Pivotal GemFire in 1 of 2 different ways.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="geode-session-configuration-properties"&gt;&lt;a class="anchor" href="#geode-session-configuration-properties"&gt;&lt;/a&gt;Configuration with Properties&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Spring Session for Apache Geode/Pivotal GemFire now gives you the ability to configure session management and Apache Geode or Pivotal GemFire using well-known, published properties.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;code&gt;@EnableGemFireHttpSession&lt;/code&gt; annotation attributes document all the well-known, published properties itself.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;By way of example, to change the session expiration timeout, you can specify the following property in a Spring Boot &lt;code&gt;application.properties&lt;/code&gt; file, as follows:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-txt" data-lang="txt"&gt;#application.properties
+
+spring.session.data.gemfire.session.expiration.max-inactive-interval-seconds=600
+...&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;More details about configuring SSDG with properties can be found in the &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/reference/html5/#httpsession-gemfire-configuration-properties"&gt;documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="geode-session-configuration-configurer"&gt;&lt;a class="anchor" href="#geode-session-configuration-configurer"&gt;&lt;/a&gt;Configuration with a Configurer&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Like Spring Web MVC&amp;#8217;s &lt;code&gt;WebMvcConfigurer&lt;/code&gt; callback interface, Spring Session for Apache Geode/Pivotal GemFire provides the &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/api/org/springframework/session/data/gemfire/config/annotation/web/http/support/SpringSessionGemFireConfigurer.html"&gt;&lt;code&gt;SpringSessionGemFireConfigurer&lt;/code&gt;&lt;/a&gt; callback interface to adjust various aspects of the Spring Session configuration.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;For example, to set the session expiration timeout, simply declare the following:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-java" data-lang="java"&gt;@Configuration
+class SpringSessionGemFireConfiguration {
+
+  @Bean
+  SpringSessionGemFireConfigurer sessionExpirationConfigurer() {
+
+    return new SpringSessionGemFireConfigurer(
+        @Value("${spring.session.timeout:600}") int sessionTimeout) {
+
+      @Override
+      public int getMaxInactiveIntervalInSeconds() {
+        return sessionTimeout;
+      }
+    };
+  }
+  ...
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;As shown above, the configuration for the Configurer can even be derived from other properties using Spring&amp;#8217;s &lt;code&gt;@Value&lt;/code&gt; annotation.  You can combine different Configurer bean definitions with different Spring profiles and so on and so forth.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;More details about using Configurers to configure SSDG can be found in the &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/reference/html5/#httpsession-gemfire-configuration-configurer"&gt;documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="geode.session.feedback"&gt;&lt;a class="anchor" href="#geode.session.feedback"&gt;&lt;/a&gt;Feedback&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Any feedback and/or contributions are always highly appreciated and welcomed.  You can reach  us through the usual channels: &lt;a href="https://github.com/spring-projects/spring-session-data-geode/issues"&gt;Issues&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-session-data-geode/pulls"&gt;PR&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-session"&gt;StackOverflow&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Thank you!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+  </entry>
+  <entry>
+    <title>Bootiful GCP: Integration with Google Cloud Pub/Sub (4/8)</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/30/bootiful-gcp-integration-with-google-cloud-pub-sub-4-8" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2018-08-18:3366</id>
+    <updated>2018-08-30T00:00:00Z</updated>
+    <content type="html">&lt;blockquote&gt;
+  &lt;p&gt;Hi Spring fans! In this brief 8 part series we’re going to look at the Spring Cloud integration for Google Cloud Platform, called Spring Cloud GCP. &lt;a href="https://cloud.spring.io/spring-cloud-gcp/"&gt;Spring Cloud GCP&lt;/a&gt; represents a joint effort between Google and Pivotal that endeavors to provide a first class experience for Spring Cloud developers when using the Google Cloud Platform. Pivotal Cloud Foundry users will enjoy an even &lt;a href="https://docs.pivotal.io/partners/gcp-sb/index.html"&gt;easier integration with the GCP service broker&lt;/a&gt;. I wrote these installments with input from Google Cloud Developer Advocate, and my buddy, &lt;a href="http://twitter.com/saturnism"&gt;Ray Tsang&lt;/a&gt;. You can also catch a walkthrough of Spring Cloud GCP in our Google Next 2018 session, &lt;a href="https://www.youtube.com/watch?v=2Jo3vy7iQf8"&gt;Bootiful Google Cloud Platform&lt;/a&gt;. Thanks buddy! As always, &lt;a href="http://twitter.com/starbuxman"&gt;I&amp;rsquo;d love to hear from you if you have feedback&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If you&amp;rsquo;re just joining us, be sure to read the previous installments including:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/20/bootiful-gcp-getting-started-with-spring-cloud-for-google-cloud-platform-1-8"&gt;Bootiful GCP: Getting Started with Spring Cloud for Google Cloud Platform (1/8)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/23/bootiful-gcp-relational-data-access-with-spring-cloud-gcp-2-8"&gt;Bootiful GCP: Relational Data Access with Spring Cloud GCP (2/8)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/27/bootiful-gcp-globally-consistent-data-access-with-spanner-3-8"&gt;Bootiful GCP: Globally Consistent Data Access with Spanner&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Let’s look at application integration with Google Cloud Pub/Sub. Google Cloud Pub/Sub supports a number of classic enterprise application integration use cases at Google scale. The &lt;a href="https://cloud.google.com/pubsub/docs/overview"&gt;Google Cloud website for Pub/Sub&lt;/a&gt; lists some:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Balancing workloads in network clusters&lt;/strong&gt;. For example, a large queue of tasks can be efficiently distributed among multiple workers, such as Google Compute Engine instances.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Implementing asynchronous workflows&lt;/strong&gt;. For example, an order processing application can place an order on a topic, from which it can be processed by one or more workers.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Distributing event notifications&lt;/strong&gt;. For example, a service that accepts user signups can send notifications whenever a new user registers, and downstream services can subscribe to receive notifications of the event.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Refreshing distributed caches&lt;/strong&gt;. For example, an application can publish invalidation events to update the IDs of objects that have changed.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Logging to multiple systems&lt;/strong&gt;. For example, a Google Compute Engine instance can write logs to the monitoring system, to a database for later querying, and so on.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Data streaming from various processes or devices&lt;/strong&gt;. For example, a residential sensor can stream data to backend servers hosted in the cloud.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Reliability improvement&lt;/strong&gt;. For example, a single-zone Compute Engine service can operate in additional zones by subscribing to a common topic, to recover from failures in a zone or region.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The flow when using Google Cloud Pub/Sub is exactly as you’d expect: a message is sent to a topic in the Pub/Sub broker (hosted in the cloud by GCP) which then persists it for you. Subscribers can either have messages pushed to it (through a webhook) or they can poll for the mesages from the broker. The subscriber receives messages from the broker and acknowledges each one. When a subscriber acknowledges a message it is removed from the subscriber’s subscription queue. Any client that can speak HTTPS can use this service. There’s no other API required.&lt;/p&gt;
+&lt;p&gt;The domain model is fairly straightforward if you’ve ever used any other messaging system (JMS, AMQP, Apache Kafka, Kestrel): a topic is the thing to which messages are published. A subscription represents the stream of messages from a specific topic that are to be delivered to a specific client application. A topic can have multiple subscriptions. A subscription can have many subscribers. If you want to distribute different messages around to different subscribers, then all the subscribers must be subscribing to the same subscription. If you want to publish the same messages to all the subscribers, then each subscriber needs to subscribe to its own subscription.&lt;/p&gt;
+&lt;p&gt;Pub/Sub delivery is at-least once. Hence, you must deal with idempotency and/or de-duplicate messages if you cannot process the same message more than once.&lt;/p&gt;
+&lt;p&gt;A message stores a combination of data and (optional) attributes that are conducted by Google Cloud Pub/Sub from a publisher to a subscriber. A message attribute, which you might better understand as a &lt;em&gt;header&lt;/em&gt;, is a key value pair in a message. You might have a header the describes the language of the payload. You might have a header that describes the content-type.&lt;/p&gt;
+&lt;p&gt;Let’s add Google Cloud Pub/Sub to an application and tie them together.&lt;/p&gt;
+&lt;p&gt;As before, we need to enable the Google Cloud Pub/Sub API for use.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint shell"&gt;gcloud services enable pubsub.googleapis.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You’ll then need to create a new topic, &lt;code&gt;reservations&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint shell"&gt;gcloud pubsub topics create reservations
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The topic represents where we will send messages. We still need to create a subscription that consumes messages from that topic. The following command creates a subscription, &lt;code&gt;reservations-subscription&lt;/code&gt;, to connect to the &lt;code&gt;reservations&lt;/code&gt; topic.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint shell"&gt;gcloud pubsub subscriptions create reservations-subscription --topic=reservations
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Those pieces in place, we can use them from our application. Add the Spring Cloud GCP Pub/Sub starter, &lt;code&gt;org.springframework.cloud&lt;/code&gt; : &lt;code&gt;spring-cloud-gcp-starter-pubsub&lt;/code&gt;, to your build. This introduces auto-configuration for the Google Cloud &lt;code&gt;PubSubTemplate&lt;/code&gt;. The &lt;code&gt;PubSubTemplate&lt;/code&gt; should feel familiar if you’ve ever used the &lt;code&gt;JmsTemplate&lt;/code&gt; or &lt;code&gt;KafkaTemplate&lt;/code&gt;. It’s an easy-to-use client for producing and consuming messages with Google Cloud Pub/Sub. If you’re just getting started with GCP Pub/Sub and messaging in general, a &lt;code&gt;*Template&lt;/code&gt; object in the Spring universe is a good place to start.&lt;/p&gt;
+&lt;p&gt;Let’s look at a simple example that publishes a message whenever you issue HTTP &lt;code&gt;POST&lt;/code&gt; calls to an HTTP endpoint running in the Spring Boot application. Then we’ll setup a subscriber to consume the messages sent.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;package com.example.gcp.pubsub.template;&#xD;
+&#xD;
+import org.springframework.beans.factory.annotation.Value;&#xD;
+import org.springframework.cloud.gcp.pubsub.core.PubSubTemplate;&#xD;
+import org.springframework.context.annotation.Configuration;&#xD;
+import org.springframework.web.bind.annotation.PathVariable;&#xD;
+import org.springframework.web.bind.annotation.PostMapping;&#xD;
+import org.springframework.web.bind.annotation.RestController;&#xD;
+&#xD;
+@Configuration&#xD;
+@RestController&#xD;
+class PublisherConfig {&#xD;
+&#xD;
+        private final PubSubTemplate template;&#xD;
+        private final String topic;&#xD;
+&#xD;
+        PublisherConfig(PubSubTemplate template, @Value(&amp;quot;${reservations.topic:reservations}&amp;quot;) String t) {&#xD;
+                this.template = template;&#xD;
+                this.topic = t;&#xD;
+        }&#xD;
+&#xD;
+        &#xD;
+        @PostMapping(&amp;quot;/publish/{name}&amp;quot;)&#xD;
+        void publish(@PathVariable String name) {&#xD;
+                this.template.publish(this.topic, &amp;quot;Hello &amp;quot; + name + &amp;quot;!&amp;quot;);&#xD;
+        }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+  &lt;li&gt;we use the injected &lt;code&gt;PubSubTemplate&lt;/code&gt; to send a message - a String - to the configured topic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now, let’s look at a simple application that might as easily run in another node that consumes messages from the subscription linked to the topic.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;package com.example.gcp.pubsub.template;&#xD;
+&#xD;
+import lombok.extern.slf4j.Slf4j;&#xD;
+import org.springframework.beans.factory.annotation.Value;&#xD;
+import org.springframework.boot.context.event.ApplicationReadyEvent;&#xD;
+import org.springframework.cloud.gcp.pubsub.core.PubSubTemplate;&#xD;
+import org.springframework.context.annotation.Configuration;&#xD;
+import org.springframework.context.event.EventListener;&#xD;
+&#xD;
+@Slf4j&#xD;
+@Configuration&#xD;
+class SubscriberConfig {&#xD;
+&#xD;
+        private final PubSubTemplate template;&#xD;
+        private final String subscription;&#xD;
+&#xD;
+        SubscriberConfig(PubSubTemplate template, @Value(&amp;quot;${reservations.subscription:reservations-subscription}&amp;quot;) String s) {&#xD;
+                this.template = template;&#xD;
+                this.subscription = s;&#xD;
+        }&#xD;
+&#xD;
+        @EventListener(ApplicationReadyEvent.class)&#xD;
+        public void start() {&#xD;
+                &#xD;
+                this.template.subscribe(this.subscription, (pubsubMessage, ackReply ) -&amp;gt; {&#xD;
+                        log.info(&amp;quot;consumed new message: [&amp;quot; + pubsubMessage.getData().toStringUtf8() + &amp;quot;]&amp;quot;);&#xD;
+                        ackReply.ack();&#xD;
+                });&#xD;
+        }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+  &lt;li&gt;Once the application is up and running we explicitly subscribe, connecting our client to the right endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This example uses the &lt;code&gt;PubSubTemplate&lt;/code&gt; (to great effect). It’s simple, short and sweet. As integration becomes more complex, however, it becomes useful to decouple components involved in the flow of messages from one system to another. We introduce stages - links in a chain of components - through which messages must pass to arrive at downstream components. This staging allows us to write handling code that can be swapped out, indifferent to the origin or destination of a given message. This promotes testing, because components need only be written in terms of their immediate pre- and post-conditions: a component can say it only accepts Spring Framework &lt;code&gt;Message&amp;lt;File&amp;gt;&lt;/code&gt; types, and nothing else. This interface indirection is &lt;em&gt;very&lt;/em&gt; handy, especially as we start to tie together real world systems that may handle work at different cadences. It becomes trivial to introduce a broker to buffer work before it reaches downstream components where it may otherwise bottleneck. This approach - of isolating components involved in a messaging flow and introducing a buffer to protect downstream components - is called a &lt;em&gt;staged event driven architecture&lt;/em&gt; (SEDA), and it is more valuable now as the world moves to microservices and highly distributed systems than ever.&lt;/p&gt;
+&lt;p&gt;Spring Integration is a framework that’s designed to promote this indirection. It has at its heart the concept of a &lt;code&gt;MessageChannel&lt;/code&gt;, which you can think of us an in-memory &lt;code&gt;Queue&lt;/code&gt;; a pipe through which messages flow. On each side of the &lt;code&gt;MessageChannel&lt;/code&gt; are sat components. You can imagine one component outputting messages of a certain type and sending them into this &lt;code&gt;MessageChannel&lt;/code&gt;, oblivious to where it’ll go. On the other end is another component that consumes messages of a certain type, utterly oblivious to the origin of any given message. Today there may be one service involved in the production of the message. Tomorrow there may be ten! The upstream and downstream components need not change. This indirection gives us a lot of possibilities. We change routing for a given message, stringing it through different services, splitting it, aggregating it, etc. We can transform other sources of data and adapt them to the messaging flow upstream (that’s called an inbound adapter). We can introduce new sinks for the data, adapting the Spring Framework &lt;code&gt;Message&amp;lt;T&amp;gt;&lt;/code&gt; into the right type (that’s called an &lt;em&gt;outbound adapter&lt;/em&gt;).&lt;/p&gt;
+&lt;p&gt;Let’s look at Spring Integration and the Google Cloud Pub/Sub inbound and outbound adapters. We’ll keep the same approach as before: an HTTP endpoint will publish messages which then get delivered to Google Cloud Pub/Sub. The code could run in different nodes. You’ll also need the Spring Integration types on the classpath for this example to work. Add &lt;code&gt;org.springframework.boot&lt;/code&gt; : &lt;code&gt;spring-boot-starter-integration&lt;/code&gt; to the build.&lt;/p&gt;
+&lt;p&gt;Let’s look at a publisher that publishes messages whenever an HTTP POST is made. In this case, the publisher sends requests into a &lt;code&gt;MessageChannel&lt;/code&gt; which then delivers it to a &lt;code&gt;PubSubMessageHandler&lt;/code&gt;. Today it’s going directly to Pub/Sub, but tomorrow it could go to a database, an FTP server, XMPP, Salesforce, or literally anything else, and &lt;em&gt;then&lt;/em&gt; off to Pub/Sub.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;package com.example.gcp.pubsub.integration;&#xD;
+&#xD;
+import lombok.extern.slf4j.Slf4j;&#xD;
+import org.springframework.beans.factory.annotation.Value;&#xD;
+import org.springframework.cloud.gcp.pubsub.core.PubSubTemplate;&#xD;
+import org.springframework.cloud.gcp.pubsub.integration.outbound.PubSubMessageHandler;&#xD;
+import org.springframework.context.annotation.Bean;&#xD;
+import org.springframework.context.annotation.Configuration;&#xD;
+import org.springframework.integration.dsl.IntegrationFlow;&#xD;
+import org.springframework.integration.dsl.IntegrationFlows;&#xD;
+import org.springframework.integration.dsl.channel.MessageChannels;&#xD;
+import org.springframework.messaging.SubscribableChannel;&#xD;
+import org.springframework.messaging.support.MessageBuilder;&#xD;
+import org.springframework.web.bind.annotation.PathVariable;&#xD;
+import org.springframework.web.bind.annotation.PostMapping;&#xD;
+import org.springframework.web.bind.annotation.RestController;&#xD;
+&#xD;
+@Slf4j&#xD;
+@RestController&#xD;
+@Configuration&#xD;
+class PublisherConfig {&#xD;
+&#xD;
+        private final String topic;&#xD;
+        private final PubSubTemplate template;&#xD;
+&#xD;
+        public PublisherConfig(&#xD;
+            @Value(&amp;quot;${reservations.topic:reservations}&amp;quot;) String t,&#xD;
+            PubSubTemplate template) {&#xD;
+                this.topic = t;&#xD;
+                this.template = template;&#xD;
+        }&#xD;
+&#xD;
+        @Bean&#xD;
+        IntegrationFlow publisherFlow() {&#xD;
+                return IntegrationFlows&#xD;
+                    .from(this.outgoing()) &#xD;
+                    .handle(this.pubSubMessageHandler()) &#xD;
+                    .get();&#xD;
+        }&#xD;
+&#xD;
+        @PostMapping(&amp;quot;/publish/{name}&amp;quot;)&#xD;
+        void publish(@PathVariable String name) {&#xD;
+                &#xD;
+                outgoing().send(MessageBuilder.withPayload(name).build());&#xD;
+        }&#xD;
+&#xD;
+        @Bean&#xD;
+        SubscribableChannel outgoing() {&#xD;
+                return MessageChannels.direct().get();&#xD;
+        }&#xD;
+&#xD;
+        @Bean&#xD;
+        PubSubMessageHandler pubSubMessageHandler() {&#xD;
+                return new PubSubMessageHandler(template, this.topic);&#xD;
+        }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+  &lt;p&gt;the &lt;code&gt;IntegrationFlow&lt;/code&gt; describes, well, the &lt;em&gt;flow&lt;/em&gt; of messages in an integration. Messages sent into the &lt;code&gt;outgoing&lt;/code&gt; &lt;code&gt;MessageChannel&lt;/code&gt; are delivered to the &lt;code&gt;PubSubMessageHandler&lt;/code&gt; which then writes it to Google Cloud Pub/Sub using the specified &lt;code&gt;topic&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;In the Spring MVC HTTP endpint we obtain a reference to the &lt;code&gt;MessageChannel&lt;/code&gt; and publish a message (which we build with the &lt;code&gt;MessageBuilder&lt;/code&gt;) into it. NB: calling &lt;code&gt;outgoing()&lt;/code&gt; as I do in this example is fine because Spring memoizes the result of the method invocation; I’ll always obtain the same pre-instantiated singleton of the &lt;code&gt;MessageChannel&lt;/code&gt; bean.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On the consumer side, we do the same thing in reverse, adapting incoming messages and then logging them in an &lt;code&gt;IntegrationFlow&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;package com.example.gcp.pubsub.integration;&#xD;
+&#xD;
+import com.google.cloud.pubsub.v1.AckReplyConsumer;&#xD;
+import lombok.extern.slf4j.Slf4j;&#xD;
+import org.springframework.beans.factory.annotation.Value;&#xD;
+import org.springframework.cloud.gcp.pubsub.core.PubSubTemplate;&#xD;
+import org.springframework.cloud.gcp.pubsub.integration.AckMode;&#xD;
+import org.springframework.cloud.gcp.pubsub.integration.inbound.PubSubInboundChannelAdapter;&#xD;
+import org.springframework.cloud.gcp.pubsub.support.GcpPubSubHeaders;&#xD;
+import org.springframework.context.annotation.Bean;&#xD;
+import org.springframework.context.annotation.Configuration;&#xD;
+import org.springframework.integration.dsl.IntegrationFlow;&#xD;
+import org.springframework.integration.dsl.IntegrationFlows;&#xD;
+import org.springframework.integration.dsl.channel.MessageChannels;&#xD;
+import org.springframework.messaging.MessageChannel;&#xD;
+&#xD;
+@Slf4j&#xD;
+@Configuration&#xD;
+class SubscriberConfig {&#xD;
+&#xD;
+        private final String subscription;&#xD;
+        private final PubSubTemplate template;&#xD;
+&#xD;
+        SubscriberConfig(&#xD;
+            @Value(&amp;quot;${reservations.subscription:reservations-subscription}&amp;quot;) String s,&#xD;
+            PubSubTemplate t) {&#xD;
+                this.subscription = s;&#xD;
+                this.template = t;&#xD;
+        }&#xD;
+&#xD;
+        @Bean &#xD;
+        public PubSubInboundChannelAdapter messageChannelAdapter() {&#xD;
+                PubSubInboundChannelAdapter adapter = new PubSubInboundChannelAdapter(&#xD;
+                    template, this.subscription);&#xD;
+                adapter.setOutputChannel(this.incoming());&#xD;
+                adapter.setAckMode(AckMode.MANUAL);&#xD;
+                return adapter;&#xD;
+        }&#xD;
+&#xD;
+        @Bean&#xD;
+        MessageChannel incoming() {&#xD;
+                return MessageChannels.publishSubscribe().get();&#xD;
+        }&#xD;
+&#xD;
+        @Bean&#xD;
+        IntegrationFlow subscriberFlow() {&#xD;
+                return IntegrationFlows&#xD;
+                    .from(this.incoming()) &#xD;
+                    .handle(message -&amp;gt; { &#xD;
+                            log.info(&amp;quot;consumed new message: [&amp;quot; + message.getPayload() + &amp;quot;]&amp;quot;);&#xD;
+                            AckReplyConsumer consumer = message.getHeaders()&#xD;
+                                .get(GcpPubSubHeaders.ACKNOWLEDGEMENT, AckReplyConsumer.class);&#xD;
+                            consumer.ack();&#xD;
+                    })&#xD;
+                    .get();&#xD;
+        }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+  &lt;p&gt;the &lt;code&gt;PubSubInboundChannelAdapter&lt;/code&gt; adapts messages from the subscription and sends them into the &lt;code&gt;incoming&lt;/code&gt; &lt;code&gt;MessageChannel&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;the &lt;code&gt;IntegrationFlow&lt;/code&gt; takes incoming messages and routes them to a &lt;code&gt;MessageHandler&lt;/code&gt; (which we’ve contributed with lambda syntax) that a) logs the incoming message and b) manually acknowledges the receipt of the message.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The nice thing about &lt;code&gt;IntegrationFlow&lt;/code&gt; in both examples is that you can chain calls together. Here, we specify only where a message comes from (&lt;code&gt;.from()&lt;/code&gt;) and what handles it (&lt;code&gt;.handle()&lt;/code&gt;), but we could as easily after the &lt;code&gt;.handle()&lt;/code&gt; call also route, split, transform, etc., the messages. The message sent as the output of one component (the adapters, the message handlers, transformers, etc.) become the input to any downstream components.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Security OAuth2 Boot Auto-config 2.0.4 &amp; 2.1.0.M2 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/29/spring-security-oauth2-boot-auto-config-2-0-4-2-1-0-m2-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Josh Cummings</name>
+    </author>
+    <id>tag:spring.io,2018-08-29:3378</id>
+    <updated>2018-08-29T18:43:16Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;I&amp;#8217;m pleased to announce on behalf of the community &lt;a href="https://github.com/spring-projects/spring-security-oauth2-boot"&gt;Spring Security OAuth2 Boot Auto-config&lt;/a&gt; 2.0.4 and 2.1.0.M2.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Both releases primarily deliver bug fixes and dependency version updates along with some minor improvements. Of particular note is that these align with &lt;a href="https://github.com/spring-projects/spring-boot/releases/tag/v2.1.0.M2"&gt;recent&lt;/a&gt; &lt;a href="https://github.com/spring-projects/spring-boot/releases/tag/v2.0.4.RELEASE"&gt;releases&lt;/a&gt; of Spring Boot.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;For a complete list of changes, please refer to the 2.0.4 &lt;a href="https://github.com/spring-projects/spring-security-oauth2-boot/milestone/7?closed=1"&gt;changelog&lt;/a&gt; and 2.1.0.M2 &lt;a href="https://github.com/spring-projects/spring-security-oauth2-boot/milestone/9?closed=1"&gt;changelog&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;&lt;a href="https://projects.spring.io/spring-security/"&gt;Project Site&lt;/a&gt; | &lt;a href="https://docs.spring.io/spring-security-oauth2-boot/docs/current/reference/htmlsingle/"&gt;Reference&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-security"&gt;Help&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;</content>
+  </entry>
+  <entry>
+    <title>This Week in Spring - August 28, 2018</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/28/this-week-in-spring-august-28-2018" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2018-08-28:3377</id>
+    <updated>2018-08-28T23:36:20Z</updated>
+    <content type="html">&lt;p&gt;Hi Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! This week I am in Chicago for the SpringOne Tour Chicago event. If you&amp;rsquo;re around, then of &lt;a href="http://twitter.com/starbuxman"&gt;course don&amp;rsquo;t hesitate to say hi&lt;/a&gt;! Mostly, though, I&amp;rsquo;ve been busily preparing for the &lt;a href="http://springoneplatform.io"&gt;epic SpringOnePlatform event&lt;/a&gt; event being held in historic Washington DC in September. I hope to see you there!&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ve got a lot to get to so let&amp;rsquo;s get to it!&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://content.pivotal.io/blog/spring-cloud-services-for-pcf-turns-2-0-adds-support-for-your-spring-boot-2-apps"&gt;Spring Cloud Services for PCF Turns 2.0&lt;/a&gt;, adds support for your Spring Boot 2 applications&lt;/li&gt;
+  &lt;li&gt;Nice article on the Pivotal blog on how to build &lt;a href="https://content.pivotal.io/pivotal-blog/how-to-build-modern-data-pipelines-with-pivotal-gemfire-and-spring-cloud-data-flow"&gt;modern data pipelines with Pivotal GemFire and Spring Cloud Data Flow&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/28/spring-cloud-stream-fishtown-m2-2-1-0-m2-release-announcement"&gt;Spring Cloud Stream Fishtown.M2 /2.1.0.M2 Release Announcement&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;In this installment of my new eight part series introducing Spring Cloud GCP, &lt;em&gt;Bootiful GCP&lt;/em&gt;, I &lt;a href="https://spring.io/blog/2018/08/27/bootiful-gcp-globally-consistent-data-access-with-spanner-3-8"&gt;look at globally consistent data access with Spring Cloud GCP and Google Cloud Spanner&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;In this, the second of an eight part series looking at Spring Cloud GCP and Google Cloud GCP, I &lt;a href="https://spring.io/blog/2018/08/23/bootiful-gcp-relational-data-access-with-spring-cloud-gcp-2-8"&gt;introduce RDBMS-based data access with Spring Cloud GCP&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://content.pivotal.io/blog/love-spring-and-spring-boot-then-you-re-going-to-love-these-projects-too"&gt;Love Spring and Spring Boot? Then, You’re Going to Love these Projects, too.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/21/spring-integration-for-aws-2-0-ga-and-spring-cloud-stream-kinesis-binder-1-0-ga"&gt;Spring Integration for AWS 2.0 GA and Spring Cloud Stream Kinesis Binder 1.0 GA&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Nice post over on the Stark and Wayne blog &lt;a href="https://starkandwayne.com/blog/how-to-reload-buildpacks-in-cf/"&gt;on how to reload buildpacks in Cloud Foundry&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;The Cloud Foundry foundation &lt;a href="https://sdtimes.com/java/report-finds-java-and-javascript-remain-the-top-languages-for-enterprise-development/"&gt;ranked programming languages most used for enterprise application development&lt;/a&gt;. No surprise here: Java ranks first.&lt;/li&gt;
+  &lt;li&gt;Join us at the &lt;a href="https://www.cloudfoundry.org/blog/cloud-foundry-north-american-summit-coming-to-philadelphia-in-april-2019/"&gt;Cloud Foundry Summit in Philadelphia&lt;/a&gt;, PA on April 2nd-4th, 2019&lt;/li&gt;
+  &lt;li&gt;This is an interesting post on how to deploy &lt;a href="https://www.linkedin.com/pulse/deploying-spring-cloud-function-aws-lambda-platform-madhu-babu/"&gt;a Spring Cloud Function-based application using the &lt;code&gt;npm&lt;/code&gt;-based Serverless framework to deploy to AWS Lambda&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Check out this guide on things to &lt;a href="https://www.linkedin.com/pulse/springone-platform-my-guide-spring-developers-day-2-guedes-rettori/"&gt;see on day 2 of SpringOne Platform&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Check out this insightful post on using &lt;a href="https://www.lionmint.com/en/spring-boot-security-with-azure-b2c-1/amp/?__twitter_impression=true"&gt;Spring Security with Microsoft Azure B2C&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Benjamin Wilms &lt;a href="https://twitter.com/mrbwilms/status/1032945865898569728?s=12"&gt;updated the docs of Chaos Monkeys for Spring Boot&lt;/a&gt; and described how to use it without adding it to your dependencies.&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://twitter.com/sam_brannen/status/1032950245842399233?s=12"&gt;Spring Framework 5.1 will no longer proxy your test instances unnecessarily&lt;/a&gt;, thanks to Juergen Hoeller who is so amazing he sometimes &lt;em&gt;unwittingly&lt;/em&gt; resolves issues! In this case, the fix arrived in &lt;a href="https://jira.spring.io/browse/SPR-9478"&gt;SPR-9478&lt;/a&gt; while tackling a Kotlin-related issue &lt;a href="https://jira.spring.io/browse/SPR-17137"&gt;SPR-17137&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;The first &lt;a href="http://mail.openjdk.java.net/pipermail/jdk-dev/2018-August/001844.html"&gt;JDK 11 Release Candidate is now available &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Check out the Netifi platform, a new platform based on RSocket, which &lt;a href="https://devops.com/netifi-rises-to-microservices-integration-challenge/"&gt;is in turn based on Reactor&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;This is pretty cool! The concept of buildpacks, which spun out of Heroku and have been embraced by the whole Cloud Foundry community, was &lt;a href="https://twitter.com/rettori/status/1031931357621104640"&gt;presented recently to the Cloud Native Foundation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://twitter.com/springcentral/status/1032344392772726785"&gt;Do &lt;em&gt;not&lt;/em&gt; miss SpringOne Platform&lt;/a&gt;! The agenda is up and waiting!&lt;/li&gt;
+  &lt;li&gt;Check out this next nice installment of &lt;a href="https://www.youtube.com/watch?v=g59Q529fna0&amp;feature=youtu.be"&gt;a video series looking at Apache Geode&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://twitter.com/sebastien_pel/status/1031884585829888001?s=12"&gt;The latest release of the Assembler project&lt;/a&gt;, which is a functional, type-safe and stateless Java API for solving the N + 1 query problem in multi-databases and microservices aggregation, is now available. Of course, it also supports Reactor for composition!&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Cloud Stream Fishtown.M2 /2.1.0.M2 Release Announcement</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/28/spring-cloud-stream-fishtown-m2-2-1-0-m2-release-announcement" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Oleg Zhurakousky</name>
+    </author>
+    <id>tag:spring.io,2018-08-28:3376</id>
+    <updated>2018-08-28T15:36:00Z</updated>
+    <content type="html">&lt;p&gt;We are pleased to announce the second Milestone of the Spring Cloud Stream Fishtown release train - Fishtown.M2/2.1.0.M2.&lt;/p&gt;
+&lt;p&gt;Spring Cloud Stream Fishtown 2.1.0.M2 is available for use in the &lt;a href="http://repo.spring.io/libs-milestone-local/org/springframework/cloud/spring-cloud-stream/2.1.0.M2/"&gt;Spring Milestone&lt;/a&gt; repository. The &lt;a href="https://github.com/spring-cloud/spring-cloud-stream-starters/releases/tag/vFishtown.M2"&gt;release notes&lt;/a&gt; include relevant information about version compatibility with Spring Boot, Spring Cloud, Spring AMQP, and Spring for Apache Kafka. &lt;/p&gt;
+&lt;p&gt;The following section provides a brief summary of features and improvements included in this release.&lt;/p&gt;&lt;h3&gt;&lt;a href="#notable-dependency-upgrades" class="anchor" name="notable-dependency-upgrades"&gt;&lt;/a&gt;Notable Dependency Upgrades&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Spring Boot 2.1.0.M2 (now fully compatible with &lt;a href="https://start.spring.io/"&gt;Spring Initializr&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;Reactor Californium M2&lt;/li&gt;
+&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-function-support" class="anchor" name="spring-cloud-function-support"&gt;&lt;/a&gt;Spring Cloud Function support&lt;/h3&gt;
+&lt;p&gt;The main theme for this release is the introduction of a new programming model which uses &lt;a href="https://cloud.spring.io/spring-cloud-function/"&gt;Spring Cloud Function&lt;/a&gt; as an alternative for defining &lt;em&gt;stream handlers&lt;/em&gt; and &lt;em&gt;sources&lt;/em&gt; which can now be expressed as beans of&lt;br/&gt; type &lt;code&gt;java.util.function.[Supplier/Function/Consumer]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;To specify which functional bean to bind to the external destination(s) exposed by the bindings, you must provide &lt;code&gt;spring.cloud.stream.function.definition&lt;/code&gt; property.&lt;/p&gt;
+&lt;p&gt;Here is the example of the Processor application exposing message handler as &lt;code&gt;java.util.function.Function&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint"&gt;@SpringBootApplication&#xD;
+@EnableBinding(Processor.class)&#xD;
+public class MyFunctionBootApp {&#xD;
+&#xD;
+	public static void main(String[] args) {&#xD;
+		SpringApplication.run(MyFunctionBootApp.class, &#xD;
+                  &amp;quot;--spring.cloud.stream.function.definition=toUpperCase&amp;quot;);&#xD;
+	}&#xD;
+&#xD;
+	@Bean&#xD;
+	public Function&amp;lt;String, String&amp;gt; toUpperCase() {&#xD;
+		return s -&amp;gt; s.toUpperCase();&#xD;
+	}&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In the above you we simply define a bean of type &lt;code&gt;java.util.function.Function&lt;/code&gt; called &lt;em&gt;toUpperCase&lt;/em&gt; and identify it as a bean to be used as message handler&lt;br/&gt;whose &lt;em&gt;input&lt;/em&gt; and &lt;em&gt;output&lt;/em&gt; will be bound to the external destinations exposed by the Processor binding.&lt;/p&gt;&lt;h4&gt;&lt;a href="#function-composition" class="anchor" name="function-composition"&gt;&lt;/a&gt;Function composition&lt;/h4&gt;
+&lt;p&gt;Using this programming model you can also benefit from &lt;em&gt;functional composition&lt;/em&gt; where you can dynamically compose complex handlers from a set of simple functions.&lt;br/&gt;As an example add the following function bean to the application defined above&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint"&gt;@Bean&#xD;
+public Function&amp;lt;String, String&amp;gt; wrapInQuotes() {&#xD;
+	return s -&amp;gt; &amp;quot;\&amp;quot;&amp;quot; + s + &amp;quot;\&amp;quot;&amp;quot;;&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and modify the &lt;code&gt;spring.cloud.stream.function.definition&lt;/code&gt; property to reflect your intention to compose a new function from both &lt;em&gt;toUpperCase&lt;/em&gt; and &lt;em&gt;wrapInQuotes&lt;/em&gt;.&lt;br/&gt;To do so Spring Cloud Function allows you to use &lt;code&gt;|&lt;/code&gt; (pipe) symbol. So to finish our example our property will now look like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint"&gt;--spring.cloud.stream.function.definition=toUpperCase|wrapInQuotes
+&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;&lt;a href="#other-notable-features-improvements-amp-enhancements" class="anchor" name="other-notable-features-improvements-amp-enhancements"&gt;&lt;/a&gt;Other Notable Features, Improvements &amp;amp; enhancements&lt;/h3&gt;&lt;h4&gt;&lt;a href="#core" class="anchor" name="core"&gt;&lt;/a&gt;Core&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Improvements and enhancements around multi-binder scenarios&lt;/li&gt;
+&lt;/ul&gt;&lt;h4&gt;&lt;a href="#rabbit-binder" class="anchor" name="rabbit-binder"&gt;&lt;/a&gt;Rabbit Binder&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Support for customization of the &lt;a href="https://github.com/spring-cloud/spring-cloud-stream-binder-rabbit/issues/164"&gt;Consumer tags&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;h4&gt;&lt;a href="#kafka-binder" class="anchor" name="kafka-binder"&gt;&lt;/a&gt;Kafka Binder&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Upgrade Kafka Client to 2.0&lt;/li&gt;
+&lt;/ul&gt;&lt;h4&gt;&lt;a href="#quality-improvements" class="anchor" name="quality-improvements"&gt;&lt;/a&gt;Quality improvements&lt;/h4&gt;
+&lt;p&gt;As part of the continuing efforts to improve the code quality and to evaluate the framework components for its contract correctness, we have a new &lt;a href="https://github.com/spring-cloud/spring-cloud-stream-acceptance-tests"&gt;Acceptance Test project&lt;/a&gt; to bootstrap Spring Cloud Stream applications on Cloud Foundry and Kubernetes. These tests run multiple times in a day on a freshly repaved environment. We hope this provides a foundation for the community and customers to build more automation pipelines on target platforms.&lt;/p&gt;&lt;h4&gt;&lt;a href="#kinesis-binder" class="anchor" name="kinesis-binder"&gt;&lt;/a&gt;Kinesis Binder&lt;/h4&gt;
+&lt;p&gt;With this release we also want to highlight the recently release &lt;a href="https://spring.io/blog/2018/08/21/spring-integration-for-aws-2-0-ga-and-spring-cloud-stream-kinesis-binder-1-0-ga"&gt;Kinesis Binder&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Various other enhancements and bug fixes:&lt;br/&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-stream/milestone/46?closed=1"&gt;Core&lt;/a&gt;&lt;br/&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-stream-binder-rabbit/milestone/27?closed=1"&gt;Rabbit Binder&lt;/a&gt;&lt;br/&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-stream-binder-kafka/milestone/30?closed=1"&gt;Kafka Binder&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;NOTE:&lt;br/&gt;If the applications are created from Spring Initializr, they need to add this BOM snippet in maven dependency management before the spring-cloud BOM declaration, otherwise you&amp;rsquo;ll end up with the latest snapshot (which may be ok since it would include all the work from M2):&lt;/p&gt;
+  &lt;pre&gt;&lt;code class="prettyprint"&gt;&amp;lt;dependency&amp;gt;&#xD;
+           &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
+           &amp;lt;artifactId&amp;gt;spring-cloud-stream-dependencies&amp;lt;/artifactId&amp;gt;&#xD;
+           &amp;lt;version&amp;gt;Fishtown.M2&amp;lt;/version&amp;gt;&#xD;
+           &amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;&#xD;
+           &amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;&#xD;
+&amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;&lt;h4&gt;&lt;a href="#next-steps" class="anchor" name="next-steps"&gt;&lt;/a&gt;Next Steps&lt;/h4&gt;
+&lt;p&gt;The M3 is planned for the end of September and will contain primarily new binding features as well as more features and improvements around to support &lt;a href="https://cloud.spring.io/spring-cloud-function/"&gt;Spring Cloud Function&lt;/a&gt; as a programming model.&lt;/p&gt;
+&lt;p&gt;As always, we welcome feedback and contributions, so please reach out to us on &lt;a href="https://stackoverflow.com/questions/tagged/spring-cloud-stream"&gt;Stackoverflow&lt;/a&gt; or &lt;a href="https://github.com/spring-cloud/spring-cloud-stream/"&gt;GitHub&lt;/a&gt; or via &lt;a href="https://gitter.im/spring-cloud/spring-cloud-stream"&gt;Gitter&lt;/a&gt;. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Bootiful GCP: Globally Consistent Data Access with Spanner (3/8)</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/27/bootiful-gcp-globally-consistent-data-access-with-spanner-3-8" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2018-08-18:3365</id>
+    <updated>2018-08-27T00:00:00Z</updated>
+    <content type="html">&lt;blockquote&gt;
+  &lt;p&gt;Hi Spring fans! In this brief 8 part series we’re going to look at the Spring Cloud integration for Google Cloud Platform, called Spring Cloud GCP. &lt;a href="https://cloud.spring.io/spring-cloud-gcp/"&gt;Spring Cloud GCP&lt;/a&gt; represents a joint effort between Google and Pivotal that endeavors to provide a first class experience for Spring Cloud developers when using the Google Cloud Platform. Pivotal Cloud Foundry users will enjoy an even &lt;a href="https://docs.pivotal.io/partners/gcp-sb/index.html"&gt;easier integration with the GCP service broker&lt;/a&gt;. I wrote these installments with input from Google Cloud Developer Advocate, and my buddy, &lt;a href="http://twitter.com/saturnism"&gt;Ray Tsang&lt;/a&gt;. You can also catch a walkthrough of Spring Cloud GCP in our Google Next 2018 session, &lt;a href="https://www.youtube.com/watch?v=2Jo3vy7iQf8"&gt;Bootiful Google Cloud Platform&lt;/a&gt;. Thanks buddy! As always, &lt;a href="http://twitter.com/starbuxman"&gt;I&amp;rsquo;d love to hear from you if you have feedback&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If you&amp;rsquo;re just joining us, be sure to read the previous installments including:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/20/bootiful-gcp-getting-started-with-spring-cloud-for-google-cloud-platform-1-8"&gt;Bootiful GCP: Getting Started with Spring Cloud for Google Cloud Platform (1/8)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/23/bootiful-gcp-relational-data-access-with-spring-cloud-gcp-2-8"&gt;Bootiful GCP: Relational Data Access with Spring Cloud GCP (2/8)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;MySQL and PostgreSQL are familiar friends in an unfamiliar land, but they’re not why we’re here. No no. Were I you, I’d look at a platform like GCP and take from it the best bits; the parts that have no analog elsewhere. The things that separate it from the other platforms. One such distinguishing feature is &lt;a href="https://en.wikipedia.org/wiki/Spanner_(database)"&gt;Google Spanner&lt;/a&gt;. Spanner is.. something else entirely. In this installment we&amp;rsquo;re going to look at Google Cloud Spanner.&lt;/p&gt;
+&lt;p&gt;Google first revealed Spanner when they introduced F1, a SQL database engine that the Adwords team moved to, &lt;em&gt;away&lt;/em&gt; from MySQL (&amp;ldquo;But Josh!,&amp;rdquo;I hear you exclaim, &amp;ldquo;Didn’t we just deploy to MySQL??&amp;rdquo;), in 2012. Spanner provides low latency reads, and to a lesser extent writes, globally. Google announced it &lt;a href="http://static.googleusercontent.com/media/research.google.com/en//archive/spanner-osdi2012.pdf"&gt;in 2012 in a research paper&lt;/a&gt; in which it called Spanner &amp;ldquo;the first system to distribute data at global scale and support externally-consistent distributed transactions.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;Spanner is impressive work on one of the hardest distributed systems problems - a globally replicated database that supports externally consistent transactions within reasonable latency bounds,&amp;rdquo; &lt;a href="https://www.zdnet.com/article/google-reveals-spanner-the-database-tech-that-can-span-the-planet/"&gt;said Andy Gross&lt;/a&gt;, principal architect at Basho.&lt;/p&gt;
+&lt;p&gt;Spanner is able to offer such a broad amount of geographic redundancy thanks to a method Google has developed of being able to give precise times to applications to let them write, read and replicate data without making mistakes. Spanner’s &amp;ldquo;TrueTime&amp;rdquo; API depends upon GPS receivers and atomic clocks that have been installed in Google’s datacentres to let applications get accurate time readings locally without having to sync globally.&lt;/p&gt;
+&lt;p&gt;There are a number of database technologies at Google, such as &lt;a href="https://ai.google/research/pubs/pub27898"&gt;Bigtable&lt;/a&gt; (columnar database, great for high throughput writes), and [Megastore](&lt;a href="https://ai.google/research/pubs/pub36971"&gt;https://ai.google/research/pubs/pub36971&lt;/a&gt;) (NoSQL Database). Bigtable only supported eventually consistent replication across datacenters. According to the paper: &amp;ldquo;At least 300 applications within Google use Megastore (despite its relatively low performance) because its data model is simpler to manage than Bigtable’s and because of its support for synchronous replication across datacenters.&amp;rdquo; At the time, applications like GMail, Picasa, Calendar, Android Market and AppEngine relied on Megastore.&lt;/p&gt;
+&lt;p&gt;Spanner was designed to be &amp;ldquo;scalable, multi-version, globally distributed, and synchronously-replicated database&amp;rdquo;. Transactions are a first-class concept in Spanner driven, in part, by their absence in Bigtable.&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;The lack of cross-row transactions in Bigtable led to frequent complaints; Percolator was in part built to address this failing. Some authors have claimed that general two-phase commit is too expensive to support, because of the performance or availability problems that it brings. We believe it is better to have application programmers deal with performance problems due to overuse of transactions as bottlenecks arise, rather than always coding around the lack of transactions. Running two-phase commit over Paxos mitigates the availability problems.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;Each of the databases have their use cases. Bigtable (on GCP as &lt;a href="https://cloud.google.com/bigtable/"&gt;Cloud Bigtable&lt;/a&gt; is great for consistent low latency and high throughput workload. While Megastore (on GCP as &lt;a href="https://cloud.google.com/datastore/"&gt;Cloud Datastore&lt;/a&gt; can be used as a managed NoSQL data store with ACID transactions. Spanner (on GCP as &lt;a href="https://cloud.google.com/spanner/"&gt;Cloud Spanner&lt;/a&gt;, is meant for horizontalliy scalable, highly available, and strongly consistent RDBMs workloads.&lt;/p&gt;
+&lt;p&gt;Well alright! I’m simultaneously interested and intimidated! I &lt;em&gt;want&lt;/em&gt; Spanner, but I &lt;em&gt;don’t&lt;/em&gt; want to have to rack and stack servers and synchronize GPS recivers and atomic clocks. But, &lt;em&gt;something&lt;/em&gt; tells me Google’d be happy to do that for me, so let’s try it out.&lt;/p&gt;
+&lt;p&gt;As before, you’ll need to enable the API for Google Cloud GCP Spanner before you can use it:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint shell"&gt;gcloud services enable spanner.googleapis.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, create a new Google Cloud Spanner instance:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint shell"&gt;gcloud spanner instances create reservations --config=regional-us-central1 \&#xD;
+  --nodes=1 --description=&amp;quot;Reservations for everybody&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, create the database instance:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint shell"&gt;gcloud spanner databases create reservations --instance=reservations
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Confirm the Spanner instance is available:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint shell"&gt;gcloud spanner databases list --instance=reservations
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once the instance is &lt;code&gt;READY&lt;/code&gt;, it’s time to create the table. Here’s the Spanner DDL. If this looks uncannily like SQL, that’s good! It should. Put this DDL into a separate file. I’ve called it &lt;code&gt;schema.ddl&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;schema.ddl.&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint sql"&gt;CREATE TABLE reservations (&#xD;
+  id        STRING (36) NOT NULL,&#xD;
+  name      STRING (255) NOT NULL&#xD;
+) PRIMARY KEY (id );
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Register the schema with the database.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint shell"&gt;gcloud spanner databases ddl update reservations \&#xD;
+  --instance=reservations --ddl=&amp;quot;$(./gcp/src/main/resources/db/schema.ddl )&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we can read the data from Spanner in our Spring application. The auto-configuration needs a little bit of configuration in order to talk to the right database.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;application.properties.&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint properties"&gt;spring.cloud.gcp.spanner.instance-id=reservations-demo&#xD;
+spring.cloud.gcp.spanner.database=reservations
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We’ll use the brand new Spring Data Spanner module that supports common Spring Data idioms when working with Spanner. Add &lt;code&gt;org.springframework.cloud&lt;/code&gt; : &lt;code&gt;spring-cloud-gcp-starter-data-spanner&lt;/code&gt; to your Maven build. Let’s use a Spring Data repository to make short work of reading with our database.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;package com.example.gcp.spanner;&#xD;
+&#xD;
+import lombok.AllArgsConstructor;&#xD;
+import lombok.Data;&#xD;
+import lombok.NoArgsConstructor;&#xD;
+import lombok.extern.slf4j.Slf4j;&#xD;
+import org.springframework.boot.SpringApplication;&#xD;
+import org.springframework.boot.autoconfigure.SpringBootApplication;&#xD;
+import org.springframework.boot.context.event.ApplicationReadyEvent;&#xD;
+import org.springframework.cloud.gcp.data.spanner.core.mapping.PrimaryKey;&#xD;
+import org.springframework.cloud.gcp.data.spanner.core.mapping.Table;&#xD;
+import org.springframework.context.event.EventListener;&#xD;
+import org.springframework.data.annotation.Id;&#xD;
+import org.springframework.data.repository.PagingAndSortingRepository;&#xD;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;&#xD;
+&#xD;
+import java.util.UUID;&#xD;
+import java.util.stream.Stream;&#xD;
+&#xD;
+@Slf4j&#xD;
+@SpringBootApplication&#xD;
+public class SpannerApplication {&#xD;
+&#xD;
+        private final ReservationRepository reservationRepository;&#xD;
+&#xD;
+        SpannerApplication(ReservationRepository reservationRepository) {&#xD;
+                this.reservationRepository = reservationRepository;&#xD;
+        }&#xD;
+&#xD;
+        @EventListener(ApplicationReadyEvent.class)&#xD;
+        public void setup() {&#xD;
+&#xD;
+                &#xD;
+                this.reservationRepository.deleteAll();&#xD;
+&#xD;
+                Stream&#xD;
+                    .of(&amp;quot;josh&amp;quot;, &amp;quot;ray&amp;quot;)&#xD;
+                    .map(name -&amp;gt; new Reservation(UUID.randomUUID().toString(), name))&#xD;
+                    .forEach(this.reservationRepository::save);&#xD;
+                this.reservationRepository.findAll().forEach(r -&amp;gt; log.info(r.toString()));&#xD;
+        }&#xD;
+&#xD;
+        public static void main(String args[]) {&#xD;
+                SpringApplication.run(SpannerApplication.class, args);&#xD;
+        }&#xD;
+}&#xD;
+&#xD;
+&#xD;
+@Data&#xD;
+@AllArgsConstructor&#xD;
+@NoArgsConstructor&#xD;
+@Table(name = &amp;quot;reservations&amp;quot;)&#xD;
+class Reservation {&#xD;
+&#xD;
+        @Id&#xD;
+        @PrimaryKey&#xD;
+        private String id;&#xD;
+        private String name;&#xD;
+}&#xD;
+&#xD;
+&#xD;
+@RepositoryRestResource&#xD;
+interface ReservationRepository extends PagingAndSortingRepository&amp;lt;Reservation, String&amp;gt; {&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+  &lt;p&gt;We kick off the application, delete existing data and then write some new data to the database using our Spring Data Spanner-powered repository.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;We define the Spring Data Spanner entity using custom mapping annotations, &lt;code&gt;@Table&lt;/code&gt; and &lt;code&gt;@PrimaryKey&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;We create a Spring Data repository that is also exposed using Spring Data REST as a REST API.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This example should look familiar if you’ve ever used Spring Data. Spring Data Spanner builds upon familiar concepts and patterns - templates, repositories, and entities - to support familiar data access patterns with a very different kind of database.&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Bootiful GCP: Relational Data Access with Spring Cloud GCP (2/8)</title>
     <link rel="alternate" href="https://spring.io/blog/2018/08/23/bootiful-gcp-relational-data-access-with-spring-cloud-gcp-2-8" />
@@ -115,7 +852,7 @@ class Reservation {&#xD;
       <name>Artem Bilan</name>
     </author>
     <id>tag:spring.io,2018-08-21:3375</id>
-    <updated>2018-08-21T20:56:19Z</updated>
+    <updated>2018-08-21T20:56:00Z</updated>
     <content type="html">&lt;div class="paragraph"&gt;
 &lt;p&gt;Dear Spring Community!&lt;/p&gt;
 &lt;/div&gt;
@@ -173,7 +910,7 @@ Similar embedding technique is used in the Kinesis Binder when &lt;code&gt;heade
 &lt;p&gt;We are looking forward for any feedback and thrilled to evolve these projects for better community requirements in the next installments.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="https://cloud.spring.io/spring-cloud-gcp"&gt;Spring Integration AWS Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-cloud/spring-cloud-stream-binder-aws-kinesis"&gt;Spring Cloud Stream Binder for AWS Kinesis Project Page&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-integration"&gt;Help&lt;/a&gt; | &lt;a href="https://gitter.im/spring-cloud/spring-cloud-stream"&gt;Chat&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-integration-aws"&gt;Spring Integration AWS Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-cloud/spring-cloud-stream-binder-aws-kinesis"&gt;Spring Cloud Stream Binder for AWS Kinesis Project Page&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-integration"&gt;Help&lt;/a&gt; | &lt;a href="https://gitter.im/spring-cloud/spring-cloud-stream"&gt;Chat&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;</content>
   </entry>
   <entry>
@@ -1077,513 +1814,5 @@ Checkout the &lt;a href="https://springoneplatform.io/2018/sessions"&gt;sessions
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;</content>
-  </entry>
-  <entry>
-    <title>This Week in Spring - August 7th, 2018</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/08/08/this-week-in-spring-august-7th-2018" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Josh Long</name>
-    </author>
-    <id>tag:spring.io,2018-08-08:3357</id>
-    <updated>2018-08-08T02:08:00Z</updated>
-    <content type="html">&lt;p&gt;HI Spring fans! This week I&amp;rsquo;m in &lt;a href="https://www.meetup.com/Miami-Java-User-Group/?_cookie-check=ijh6mnmDVvhGmEyx"&gt;Miami for the Java User Group&lt;/a&gt; and at home working on new episodes of Spring Tips. Just trying to keep moving! It&amp;rsquo;s been a whirlwind week in Spring, though, so let&amp;rsquo;s get to it! &lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Reactor team ninja Simon Baslé has just announced the first milestone of &lt;a href="https://spring.io/blog/2018/08/07/reactor-californium-m1-this-summer-s-milestone-release-train"&gt;the Californium release train of project Reactor&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;This is a nice example of &lt;a href="https://github.com/spring-projects/spring-data-examples/tree/master/jdbc/jooq"&gt;using Spring Data JDBC with JOOQ&lt;/a&gt;.. &lt;em&gt;in the Spring Data examples&lt;/em&gt;!&lt;/li&gt;
-  &lt;li&gt;Happy Birthday Istio! This post looks at how &lt;a href="https://content.pivotal.io/blog/happy-birthday-istio-a-closer-look-at-how-pivotal-is-embedding-the-service-mesh-to-cloud-foundry-kubernetes-and-knative"&gt;Pivotal embeds the service mesh to Cloud Foundry, Kubernetes, and Knative&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Ryan Baxter has just announced the first &lt;a href="https://spring.io/blog/2018/08/01/spring-cloud-finchley-sr1-is-available"&gt;release of Spring Cloud Finchley, SR1&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Our very own Paul Czarkowski has just published a &lt;a href="https://content.pivotal.io/blog/deploying-software-on-pks-creating-a-continuous-delivery-pipeline-with-spinnaker"&gt;fairly lengthy tutorial on deploying Spinnaker to Pivotal Container Service (or any Kubernetes)&lt;/a&gt; using Helm and then creating pipelines in Spinnaker to deploy applications to PKS/Kubernetes. This is &lt;em&gt;awesome&lt;/em&gt;!&lt;/li&gt;
-  &lt;li&gt;Spring Integration lead Gary Russell just announced maintenance and milestone &lt;a href="https://spring.io/blog/2018/08/01/new-spring-integration-amqp-kafka-maintenance-and-milestone-releases"&gt;releases for Spring Integration and Spring AMQP&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/01/spring-integration-for-aws-2-0-0-rc1-and-spring-cloud-stream-kinesis-binder-1-0-0-rc1"&gt;Spring Integration for AWS 2.0.0.RC1 and Spring Cloud Stream Kinesis Binder 1.0.0.RC1&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/01/spring-vault-2-1-m1-available-now"&gt;Spring Vault 2.1 M1 available now&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/07/31/spring-io-platform-cairo-sr3"&gt;Spring IO Platform Cairo SR3&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/07/31/spring-io-platform-brussels-sr12"&gt;Spring IO Platform Brussels SR12&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/07/31/this-week-in-spring-july-31st-2018"&gt;This Week in Spring - July 31st, 2018&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;This is a super helpful post by data driven Spring community member Michael Simons, now working at Neo4j, on how to &lt;a href="https://michael-simons.github.io/neo4j-sdn-ogm-tips/use_dynamic_finder.html"&gt;create Spring Data Neo4j repositories that find nodes by arbitrary properties&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Follow this dead-simple tutorial on how to use BOSH, the no-drift, service-not-server-centric package manager for infrastructure that underpins Cloud Foundry and Pivotal&amp;rsquo;s Kubernetes services, &lt;a href="https://www.cloudfoundry.org/blog/create-lean-bosh-release/"&gt;to create a dead-simple BOSH release&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://rework.withgoogle.com/guides/understanding-team-effectiveness/steps/identify-dynamics-of-effective-teams/"&gt;re:Work - Guide: Understand team effectiveness&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;This is a great post fro Gregor Hohpe, of the &lt;em&gt;Enterprise Integration Patterns&lt;/em&gt; book fame, &lt;a href="https://www.linkedin.com/pulse/architecture-constraints-end-multi-tenancy-gregor-hohpe/"&gt;on the end of multitenancy&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://www.suse.com/media/case-study/apiomat_cs.pdf"&gt;This a case study and it&amp;rsquo;s interesting&lt;/a&gt;. What&amp;rsquo;s &lt;em&gt;most&lt;/em&gt; interesting to me is that it talks about both Cloud Foundry and Kubernetes being used together. Nice!&lt;/li&gt;
-  &lt;li&gt;This is a nice article on best practices for Spring Boot developers. There&amp;rsquo;s a lot of good stuff here! &lt;a href="https://www.e4developer.com/2018/08/06/spring-boot-best-practices/"&gt;A few of us on the Spring team contributed input&lt;/a&gt;. Check it out.&lt;/li&gt;
-  &lt;li&gt;I love this Spanish-language post on how &lt;a href="http://blog.joedayz.pe/2018/08/monitoreando-tus-micro-servicios-con.html?m=1"&gt;to monitor Spring Boot-based applications&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Check out the latest release of Trampoline, a tool for managing instances of &lt;a href="https://twitter.com/trampolinesb/status/1026396042474995713?s=12"&gt;Spring Boot-based applications running on your location node during development&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Have you &lt;a href="http://asset-pipeline.com/"&gt;seen Asset Pipeline&lt;/a&gt;? it supports an asset pipeline (for things like minification, transpilation, bundling, etc., for things like JavaScript, TypeScript, CSS, SCSS, etc.) and it works with Spring Boot, Grails, Ratpack, etc.&lt;/li&gt;
-  &lt;li&gt;This won&amp;rsquo;t be news to you, dear listeners - because presumably by this point you&amp;rsquo;ve already listened to all of them! :D - but did you know that the Spring YouTube channel (which is located at &lt;a href="http://spring.io/video"&gt;spring.io/video&lt;/a&gt;) now has &lt;a href="https://twitter.com/springcentral/status/1026499676235866112"&gt;over 100k subscribers&lt;/a&gt;! Are you a subscribe? Now&amp;rsquo;s a good time to join the fun. If you&amp;rsquo;re already a subscriber, then thank you so much!&lt;/li&gt;
-  &lt;li&gt;I &lt;em&gt;love&lt;/em&gt; &lt;a href="http://blog.marcosbarbero.com/pt_BR/"&gt;Marcos Barbero&amp;rsquo;s numerous Portuguese-language posts&lt;/a&gt; on Spring Boot and so can you!&lt;/li&gt;
-  &lt;li&gt;What do you need to &lt;a href="https://medium.com/criciumadev/its-time-migrating-to-java-11-5eb3868354f9"&gt;know about migrating to Java 11&lt;/a&gt;? (Remember, it&amp;rsquo;s just around the corner!)&lt;/li&gt;
-  &lt;li&gt;Spring Cloud Kubernetes has just graduated from incubation and &lt;a href="https://twitter.com/salaboy/status/1025285377584713728"&gt;the 0.3.0.RELEASE (a preview release) is now on maven central&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Oded Shopen has a nice post on deploying &lt;a href="https://medium.com/@odedia/deploy-spring-boot-application-to-pivotal-cloud-foundry-8bab62e7fbaf"&gt;Spring Boot-based applications to Pivotal Cloud Foundry&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://medium.com/@odedia/exploring-pivotal-cloud-foundrys-apps-manager-26d6a9c8ce76"&gt;Exploring Pivotal Cloud Foundry’s Apps Manager – Oded Shopen – Medium&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Oded Shopen also &lt;a href="https://medium.com/@odedia/a-tale-of-3-cloud-native-abstractions-for-event-processing-e7f3de484aa0"&gt;put together this nice post on three abstractions for event processing&lt;/a&gt;, which is also worth a read!&lt;/li&gt;
-  &lt;li&gt;Oded Shopen &lt;em&gt;also&lt;/em&gt; did a great talk on session management &lt;a href="https://www.youtube.com/watch?v=uJePLpfPsug&amp;feature=youtu.be"&gt;with Spring and Redis in this Redis Labs talk&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Alex Soto has a nice post on &lt;a href="http://www.lordofthejars.com/2018/06/spring-boot-cockroach-db-in.html"&gt;deploying Cockroach DB on Kubernetes and talking to it from Spring Boot&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;These are the slides to &lt;a href="https://speakerdeck.com/corneil/spring-fu-a-quick-introduction"&gt;Corneil du Plessis&amp;rsquo;s talk on Spring Fu&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;The talks from the &lt;a href="https://m.youtube.com/playlist?list=PLX8CzqL3ArzVnxC6PYxMlngEMv3W1pIkn"&gt;JVM Language Summit are up and accessible!&lt;/a&gt; I &lt;em&gt;devour&lt;/em&gt; these talks every year. There&amp;rsquo;s no single better resource for ingesting all the latest and greatest of the future of Java.&lt;/li&gt;
-  &lt;li&gt;It&amp;rsquo;d be so amazing to be able to easily &amp;lsquo;link&amp;rsquo; to your IDE&amp;rsquo;s workspace so that somebody else could pick up where you left off, inheriting your context and everything else. &lt;a href="https://twitter.com/eclipse_che/status/1022837528188145665"&gt;Now, with Eclipse Che, the browser-based Eclipse IDE&lt;/a&gt;, you can!&lt;/li&gt;
-  &lt;li&gt;Whether you&amp;rsquo;re using Kubernetes or Cloud Foundry, you should get &lt;a href="https://twitter.com/cloudfoundry/status/1024734933275693056"&gt;to know the open service broker API&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;As if you need any more reasons to come to the epic SpringOne Platform event this year in Washington DC, &lt;a href="https://twitter.com/springcentral/status/1024719216883118080"&gt;Rod Johnson, the creator of Spring and CEO of Atomist, will be there, too&lt;/a&gt;!&lt;/li&gt;
-  &lt;li&gt;Get started with the latest and greatest in &lt;a href="https://twitter.com/springcloud/status/1024674329622179840"&gt;stream processing and integration powerhouse Spring Cloud Data Flow &lt;em&gt;in a single tweet&lt;/em&gt;&lt;/a&gt;!&lt;/li&gt;
-  &lt;li&gt;This is pretty interesting! It demonstrate show to use &lt;a href="https://igorski.co/java/junit/samebug-extension-junit5/"&gt;the Samebug extension for JUnit 5 to support easier debugging of Java applications&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Thorben Janssen has a &lt;a href="https://www.thoughts-on-java.org/update-database-schema-without-downtime/"&gt;great post on zero-downtime database updates&lt;/a&gt;. Not much code, but it is a &lt;em&gt;very&lt;/em&gt; useful post indeed.&lt;/li&gt;
-  &lt;li&gt;Missed a few _This Week in Spring_s? Want to catch up on the latest and greatest in the &lt;a href="https://twitter.com/springcentral/status/1024412396620795905"&gt;Pivotal and Spring ecosystems in a monthly cadence&lt;/a&gt;? Check out, you guessed it, &lt;em&gt;This Month in Spring&lt;/em&gt;!
-&lt;/li&gt;
-  &lt;li&gt;The next &lt;a href="https://twitter.com/ryanpmorgan/status/1024351467191365637?s=12"&gt;Cloud Foundry Java buildpack seamlessly integrates with the Google Cloud Stackdriver service&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/snicoll/status/1024233314440437760?s=12"&gt;twitter.com&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Redis Client Lettuce has just released &lt;a href="https://twitter.com/lettucedriver/status/1024186170786439168?s=12"&gt;4.4.6.Final and 5.0.5.RELEASE released&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;great post by two of the best in the biz, Matt Raible and Simon Maple: &lt;a href="https://developer.okta.com/blog/2018/07/30/10-ways-to-secure-spring-boot"&gt;10 excellent ways to secure your Spring Boot application!&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Thanks Liberty IT &lt;a href="https://irishtechnews.ie/liberty-it-hosts-josh-long-at-spring-boot-coding/amp/"&gt;for having me in Dublin, Ireland and Belfast, North Ireland!&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Reactor Californium-M1, this summer's Milestone release train</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/08/07/reactor-californium-m1-this-summer-s-milestone-release-train" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Simon Baslé</name>
-    </author>
-    <id>tag:spring.io,2018-06-12:3297</id>
-    <updated>2018-08-07T09:08:00Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the Reactor team, I have the pleasure of announcing the newest Reactor milestone, &lt;code&gt;Californium-M1&lt;/code&gt; &#x1f6a2; &#x1f682;&lt;/p&gt;
-&lt;p&gt;The team has been busy working on &lt;code&gt;Californium&lt;/code&gt;, the third major installment of Reactor 3. We are now ready for your feedback on a few select issues, and we have a lot of enhancements and bug fixes ready for your consumption as well.&lt;/p&gt;&lt;h1&gt;&lt;a href="#californium-m1-bom" class="anchor" name="californium-m1-bom"&gt;&lt;/a&gt;Californium-M1 BOM&lt;/h1&gt;
-&lt;p&gt;For its third release train, we continue on the theme of alphabetically increasing names on the periodic table of elements. Californium is an element first synthesized in California.&lt;/p&gt;
-&lt;p&gt;The milestone&amp;rsquo;s BOM contains:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code&gt;reactor-core&lt;/code&gt; &lt;code&gt;3.2.0.M3&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;reactor-extra&lt;/code&gt; &lt;code&gt;3.2.0.M1&lt;/code&gt; (with a few API alignment changes)&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;reactor-netty&lt;/code&gt; &lt;code&gt;0.8.0.M1&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Early this year (M1), there was an early preview of &lt;code&gt;reactor-core&lt;/code&gt; that was solely focused on the &amp;ldquo;error mode continue&amp;rdquo; feature, and core also had an off-train milestone release (M2) in June. This blog post covers changes from the latter in addition to those in the brand new M3.&lt;/p&gt;&lt;h1&gt;&lt;a href="#reactor-netty-0-8-0-m1" class="anchor" name="reactor-netty-0-8-0-m1"&gt;&lt;/a&gt;Reactor Netty 0.8.0.M1&lt;/h1&gt;
-&lt;p&gt;The heavyweight here is &lt;a href="https://github.com/reactor/reactor-netty/releases/tag/v0.8.0.M1"&gt;&lt;code&gt;reactor-netty&lt;/code&gt;&lt;/a&gt;. Expect a fuller blog post that details the rationale behind the API changes and new features, which include:&lt;/p&gt;&lt;h3&gt;&lt;a href="#api-revamp" class="anchor" name="api-revamp"&gt;&lt;/a&gt;API revamp&lt;/h3&gt;
-&lt;p&gt;The team has introduced a large revamp of the API that is more guiding when building clients and servers, avoiding unforgiving configuration errors that were too easy to make in the 0.7.x line.&lt;/p&gt;
-&lt;p&gt;The lifecycle is also more clearly outlined by the new API.&lt;/p&gt;&lt;h3&gt;&lt;a href="#http2-support" class="anchor" name="http2-support"&gt;&lt;/a&gt;HTTP2 support&lt;/h3&gt;
-&lt;p&gt;Yes, &lt;strong&gt;HTTP2 support&lt;/strong&gt; &#x1f44d; For now it is mainly upgrading to HTTP2 transparently, but we are working on adding HTTP2 individual streams as first-class citizens in the near future.&lt;/p&gt;&lt;h1&gt;&lt;a href="#reactor-core-3-2-0" class="anchor" name="reactor-core-3-2-0"&gt;&lt;/a&gt;Reactor Core 3.2.0&lt;/h1&gt;
-&lt;p&gt;Altogether, M2 and M3 bring in over 70 changes compared to the previous Bismuth iteration.&lt;/p&gt;
-&lt;p&gt;There are fewer API changes in reactor-core than in reactor-netty, and the update considerations are mainly about differences between the milestones themselves. See the &amp;ldquo;update considerations&amp;rdquo; section of &lt;a href="https://github.com/reactor/reactor-core/releases/tag/v3.2.0.M2"&gt;M2&lt;/a&gt; and &lt;a href="https://github.com/reactor/reactor-core/releases/tag/v3.2.0.M3"&gt;M3&lt;/a&gt; for more details.&lt;/p&gt;
-&lt;p&gt;We most need your feedback for the following features:&lt;/p&gt;&lt;h3&gt;&lt;a href="#metrics" class="anchor" name="metrics"&gt;&lt;/a&gt;Metrics&lt;/h3&gt;
-&lt;p&gt;Micrometer and &lt;code&gt;.metrics()&lt;/code&gt; support (&lt;a href="https://github.com/reactor/reactor-core/issues/1183"&gt;#1183&lt;/a&gt;, &lt;a href="https://github.com/reactor/reactor-core/issues/1123"&gt;#1123&lt;/a&gt;) has been added. The new &lt;code&gt;.metrics()&lt;/code&gt; operator does something only if &lt;code&gt;Micrometer&lt;/code&gt; is on the classpath.&lt;/p&gt;
-&lt;p&gt;It records metrics on &lt;code&gt;onNext&lt;/code&gt; timings, subscription-to-completion timings, signal count, and others &amp;ndash; all from the perspective of what signals the immediate upstream operator produces.&lt;/p&gt;
-&lt;p&gt;It was introduced in M2 but has seen improvements in M3, as well as a (breaking) change in some of the tags names (&lt;a href="https://github.com/reactor/reactor-core/pull/1245"&gt;#1245&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;Note that an important goal was to avoid exposing Micrometer stuff in the public Reactor API. We didn&amp;rsquo;t want to have a mandatory dependency to Micrometer, and we strove to contain its usage to internal classes loaded only if we detect it on the classpath.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Up next&lt;/strong&gt;:&lt;br/&gt;Before GA, there should also be basic instrumentation support for &lt;code&gt;Schedulers&lt;/code&gt; (or rather the &lt;code&gt;ExecutorServices&lt;/code&gt; that back some of the &lt;code&gt;Schedulers&lt;/code&gt;). We are also looking at a way to choose a specific &lt;code&gt;MeterRegistry&lt;/code&gt; globally for Reactor, again without exposing a public API that refers to the &lt;code&gt;MeterRegistry&lt;/code&gt; interface.&lt;/p&gt;
-&lt;/blockquote&gt;&lt;h3&gt;&lt;a href="#advanced-retry" class="anchor" name="advanced-retry"&gt;&lt;/a&gt;Advanced Retry&lt;/h3&gt;
-&lt;p&gt;We added a preconfigured alternative to &lt;code&gt;retryWhen&lt;/code&gt; with exponential backoff and jitter (&lt;code&gt;retryBackoff()&lt;/code&gt;. See &lt;a href="https://github.com/reactor/reactor-core/issues/1122"&gt;#1122&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;This version of retry reflects what we think is the industry best practice in terms of retries. It is a good middle ground between the too simple &lt;code&gt;retry(n)&lt;/code&gt;, the complex &lt;code&gt;retryWhen(Function)&lt;/code&gt; and the more configurable &lt;code&gt;RetryFunction&lt;/code&gt; from &lt;code&gt;reactor-addons&lt;/code&gt;.&lt;/p&gt;&lt;h3&gt;&lt;a href="#resource-based-reactive-closures" class="anchor" name="resource-based-reactive-closures"&gt;&lt;/a&gt;Resource-based reactive closures&lt;/h3&gt;
-&lt;p&gt;To help you build reactive transactional blocks, we added &lt;a href="https://github.com/reactor/reactor-core/issues/1220"&gt;&lt;code&gt;usingWhen&lt;/code&gt;&lt;/a&gt;. Like &lt;code&gt;using&lt;/code&gt;, it wraps a resource, generates a &lt;code&gt;Flux&lt;/code&gt; out of it, and ensures that the resource is properly cleaned up when the Flux terminates.&lt;/p&gt;
-&lt;p&gt;The major differences are:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;The resource is provided asynchronously through a &lt;code&gt;Publisher&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Cleanups are asynchronous as well (&lt;code&gt;Function&amp;lt;Resource, Publisher&amp;gt;&lt;/code&gt;) and delay only the propagation of the terminal signals, NOT the onNext signals.&lt;/li&gt;
-  &lt;li&gt;The operator can have separate async &amp;ldquo;cleanups&amp;rdquo; for complete, error, and cancel terminations.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This was introduced in M2 but slightly changed in M3 to fix &lt;code&gt;Context&lt;/code&gt; propagation and to support cancellation of the &lt;code&gt;Publisher&amp;lt;Resource&amp;gt;&lt;/code&gt;. By cancelling the main &lt;code&gt;Flux&amp;lt;T&amp;gt;&lt;/code&gt; returned by this operator &lt;strong&gt;before&lt;/strong&gt; the &lt;code&gt;Resource&lt;/code&gt; is even emitted, your cancel instruction is propagated to the &lt;code&gt;Publisher&amp;lt;Resource&amp;gt;&lt;/code&gt;.&lt;/p&gt;&lt;h3&gt;&lt;a href="#code-ondiscard-code-hook" class="anchor" name="code-ondiscard-code-hook"&gt;&lt;/a&gt;&lt;code&gt;onDiscard&lt;/code&gt; hook&lt;/h3&gt;
-&lt;p&gt;This global hook, which takes the form of a &lt;code&gt;Consumer&amp;lt;Object&amp;gt;&lt;/code&gt;, is intended as the last missing piece for advanced users that deal with off-heap objects that need special cleanup.&lt;/p&gt;
-&lt;p&gt;Typically, Netty&amp;rsquo;s &lt;code&gt;ByteBuf&lt;/code&gt; or Spring 5&amp;rsquo;s &lt;code&gt;DataBuffer&lt;/code&gt; fall into this category: They are pooled, off-heap, and need a &lt;code&gt;release()&lt;/code&gt; call once they&amp;rsquo;re not used, lest there be a memory leak.&lt;/p&gt;
-&lt;p&gt;Such elements could fall between the cracks of reactive sequences and never reach user code in three broad situations:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;the operator&amp;rsquo;s source is malformed and doesn&amp;rsquo;t respect RS specification (for example, it emits a &lt;code&gt;ByteBuf&lt;/code&gt; &lt;em&gt;after&lt;/em&gt; having signalled &lt;code&gt;onComplete&lt;/code&gt;).&lt;/li&gt;
-  &lt;li&gt;the operator filters some elements as part of its semantics (for example &lt;code&gt;filter&lt;/code&gt;).&lt;/li&gt;
-  &lt;li&gt;the operator prefetches for backpressure optimization purposes and is cancelled, discarding its prefetch queue.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Case (1) was already covered by the &lt;code&gt;onNextDropped&lt;/code&gt; hook, but case (3) was definitely not.&lt;br/&gt;Case (2) (filter semantics) was a bit in the middle, with the possibility of doing the cleanup &lt;em&gt;inside&lt;/em&gt; the filtering &lt;code&gt;Predicate&lt;/code&gt;, for example. But that was cumbersome and prone to be forgotten.&lt;/p&gt;
-&lt;p&gt;So we added the &lt;code&gt;onDiscard&lt;/code&gt; to our repertoire of &lt;code&gt;Hooks&lt;/code&gt; to cover (2) and (3). Note that, unlike the &amp;ldquo;continue on error&amp;rdquo; feature, for now, there is no public API to setup the hook on a specific &lt;code&gt;Flux&lt;/code&gt; instance. There is an unsupported workaround with the &lt;code&gt;Context&lt;/code&gt;, and an official API is likely to make an appearance in the GA or a later maintenance release.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;onDiscard&lt;/code&gt; hook has the following &lt;strong&gt;characteristics and requirements&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;It is additive, meaning that invoking &lt;code&gt;Hooks.onDiscard(Consumer)&lt;/code&gt; twice will combine the two consumers using &lt;code&gt;Consumer#andThen&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;It is not keyed, meaning that while multiple calls are additive, it can only be reset in full (not on a per-&lt;code&gt;Consumer&lt;/code&gt; basis).&lt;/li&gt;
-  &lt;li&gt;The &lt;code&gt;Consumer&lt;/code&gt; MUST perform &lt;code&gt;instanceof&lt;/code&gt; checks before casting, as it WILL be used with different types of objects.&lt;/li&gt;
-  &lt;li&gt;The &lt;code&gt;Consumer&lt;/code&gt; MUST NOT throw exceptions and should contain &lt;code&gt;try catch&lt;/code&gt; blocks as needed.&lt;/li&gt;
-  &lt;li&gt;The &lt;code&gt;Consumer&lt;/code&gt; MUST be idempotent, as it might be invoked on the same instance multiple times (for example, in the case of overlapping buffers).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;On a side note, &lt;code&gt;errorStrategyContinue()&lt;/code&gt; &lt;strong&gt;has been renamed in M3 to &lt;code&gt;onErrorContinue()&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;&lt;h1&gt;&lt;a href="#reactor-extra-3-2-0-m1" class="anchor" name="reactor-extra-3-2-0-m1"&gt;&lt;/a&gt;Reactor Extra 3.2.0.M1&lt;/h1&gt;
-&lt;p&gt;Finally, &lt;code&gt;reactor-extra&lt;/code&gt; has a more minor API change in the retry/repeat utils side of things. It aligns with the &lt;code&gt;core&lt;/code&gt; operators, using the same default values and &lt;code&gt;Long&lt;/code&gt; rather than &lt;code&gt;Integer&lt;/code&gt; indexes.&lt;/p&gt;&lt;h1&gt;&lt;a href="#next-steps" class="anchor" name="next-steps"&gt;&lt;/a&gt;Next Steps&lt;/h1&gt;
-&lt;p&gt;The next step for &lt;code&gt;reactor-core&lt;/code&gt; is a rework of how the &lt;code&gt;Processor&lt;/code&gt; objects are exposed. The current &lt;code&gt;FluxProcessor&amp;lt;IN, OUT&amp;gt;&lt;/code&gt; is a bit bloated, because it extends and exposes the whole &lt;code&gt;Flux&lt;/code&gt; API.&lt;/p&gt;
-&lt;p&gt;Additionally, the &lt;code&gt;FluxProcessor#sink()&lt;/code&gt; and associated &lt;code&gt;FluxSink&lt;/code&gt; are too easily misused, especially when one seeks to both subscribe a &lt;code&gt;Processor&lt;/code&gt; to a &lt;code&gt;Publisher&lt;/code&gt; source AND manually push data to it through the &lt;code&gt;sink()&lt;/code&gt;, which isn&amp;rsquo;t really supported currently.&lt;br/&gt;The fact that &lt;code&gt;sink()&lt;/code&gt; should be called once and the returned &lt;code&gt;FluxSink&amp;lt;T&amp;gt;&lt;/code&gt; instance should be reused is also not crystal clear.&lt;/p&gt;
-&lt;p&gt;So we are looking at a facade over &lt;code&gt;Processor&amp;lt;T, T&amp;gt;&lt;/code&gt; that directly implements &lt;code&gt;FluxSink&lt;/code&gt; (instead of &lt;code&gt;Flux&lt;/code&gt;), works when both are used as a subscriber and a sink, and has an &lt;code&gt;asFlux()&lt;/code&gt; view method to &lt;em&gt;optionally&lt;/em&gt; build a chain of &lt;code&gt;Flux&lt;/code&gt; operators on top of it.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;MonoProcessor&lt;/code&gt; will likely follow in these steps by becoming a (simpler) interface, with the concrete implementation being renamed to &lt;code&gt;MonoNextProcessor&lt;/code&gt;. We are also looking at offering a stand-alone implementation of a &lt;code&gt;MonoSink&lt;/code&gt; that users can directly manipulate without the need to use &lt;code&gt;Mono.create()&lt;/code&gt;.&lt;/p&gt;&lt;h1&gt;&lt;a href="#conclusion" class="anchor" name="conclusion"&gt;&lt;/a&gt;Conclusion&lt;/h1&gt;
-&lt;p&gt;Cool people don&amp;rsquo;t wait for the GA release! Go kick the tires on that shiny milestone, and, as always, feedback is welcome. :)&lt;/p&gt;
-&lt;p&gt;Happy reactive coding!&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Cloud Finchley.SR1 Is Available</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/08/01/spring-cloud-finchley-sr1-is-available" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Ryan Baxter</name>
-    </author>
-    <id>tag:spring.io,2018-08-01:3354</id>
-    <updated>2018-08-01T18:10:16Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the community, I am pleased to announce that SR1 (Service Release) of the &lt;a href="https://cloud.spring.io"&gt;Spring Cloud Finchley&lt;/a&gt; Release Train is available today. The release can be found in &lt;a href="http://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dependencies/Finchley.SR1/"&gt;Maven Central&lt;/a&gt;. You can check out the Finchley &lt;a href="https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Finchley-Release-Notes"&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;&lt;h3&gt;&lt;a href="#spring-cloud-gateway" class="anchor" name="spring-cloud-gateway"&gt;&lt;/a&gt;Spring Cloud Gateway&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-gateway/milestone/15?closed=1"&gt;Bug Fixes&lt;/a&gt;. Those dealing with an empty body and no content type are of note.&lt;/li&gt;
-  &lt;li&gt;Supports CORS Configuration &lt;a href="https://github.com/spring-cloud/spring-cloud-gateway/issues/229"&gt;#229&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Response Timeout Configuration &lt;a href="https://github.com/spring-cloud/spring-cloud-gateway/issues/371"&gt;#371&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Auto configuration and DSL support for Cloud Foundry route services &lt;a href="https://github.com/spring-cloud/spring-cloud-gateway/pull/294"&gt;#294&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Better error messages and error logging in certain cases.&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-sleuth" class="anchor" name="spring-cloud-sleuth"&gt;&lt;/a&gt;Spring Cloud Sleuth&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-sleuth/issues?q=is%3Aclosed+milestone%3A2.0.1.RELEASE"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-config" class="anchor" name="spring-cloud-config"&gt;&lt;/a&gt;Spring Cloud Config&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-config/issues?q=is%3Aclosed+milestone%3A2.0.1.RELEASE"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-netflix" class="anchor" name="spring-cloud-netflix"&gt;&lt;/a&gt;Spring Cloud Netflix&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-netflix/issues?q=milestone%3A2.0.1.RELEASE+is%3Aclosed"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-commons" class="anchor" name="spring-cloud-commons"&gt;&lt;/a&gt;Spring Cloud Commons&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-commons/issues?q=is%3Aclosed+milestone%3A2.0.1.RELEASE"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-contract" class="anchor" name="spring-cloud-contract"&gt;&lt;/a&gt;Spring Cloud Contract&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-contract/pull/684"&gt;Fixed the ordering of parsing YAML based contracts&lt;/a&gt;. Now your custom parsers will be read first.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-contract/issues?q=is%3Aclosed+milestone%3A2.0.1.RELEASE"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-stream" class="anchor" name="spring-cloud-stream"&gt;&lt;/a&gt;Spring Cloud Stream&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-stream-starters/releases/tag/vElmhurst.SR1"&gt;Release Notes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-vault" class="anchor" name="spring-cloud-vault"&gt;&lt;/a&gt;Spring Cloud Vault&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-vault/issues?q=is%3Aclosed+milestone%3A2.0.1"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-openfeign" class="anchor" name="spring-cloud-openfeign"&gt;&lt;/a&gt;Spring Cloud Openfeign&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-openfeign/issues?q=is%3Aclosed+milestone%3A2.0.1.RELEASE"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-consul" class="anchor" name="spring-cloud-consul"&gt;&lt;/a&gt;Spring Cloud Consul&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Adds support for configuring Consul Client &lt;code&gt;TLSConfig&lt;/code&gt; &lt;a href="https://github.com/spring-cloud/spring-cloud-consul/issues/360"&gt;#360&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The following modules were updated as part of Finchley.SR1&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Module &lt;/th&gt;
-      &lt;th&gt;Version &lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Consul &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Gateway &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Sleuth &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Config &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Netflix &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Commons &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Contract &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Stream &lt;/td&gt;
-      &lt;td&gt;Elmhurst.SR1 &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Vault &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Openfeign &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;As always, we welcome feedback on &lt;a href="https://github.com/spring-cloud/"&gt;GitHub&lt;/a&gt;, on &lt;a href="https://gitter.im/spring-cloud/spring-cloud"&gt;Gitter&lt;/a&gt;, on &lt;a href="http://stackoverflow.com/questions/tagged/spring-cloud"&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href="https://twitter.com/SpringCloud"&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint"&gt;&lt;br/&gt;&amp;lt;dependencyManagement&amp;gt;&#xD;
-    &amp;lt;dependencies&amp;gt;&#xD;
-        &amp;lt;dependency&amp;gt;&#xD;
-            &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-            &amp;lt;artifactId&amp;gt;spring-cloud-dependencies&amp;lt;/artifactId&amp;gt;&#xD;
-            &amp;lt;version&amp;gt;Finchley.SR1&amp;lt;/version&amp;gt;&#xD;
-            &amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;&#xD;
-            &amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;&#xD;
-        &amp;lt;/dependency&amp;gt;&#xD;
-    &amp;lt;/dependencies&amp;gt;&#xD;
-&amp;lt;/dependencyManagement&amp;gt;&#xD;
-&amp;lt;dependencies&amp;gt;&#xD;
-    &amp;lt;dependency&amp;gt;&#xD;
-        &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-        &amp;lt;artifactId&amp;gt;spring-cloud-starter-config&amp;lt;/artifactId&amp;gt;&#xD;
-    &amp;lt;/dependency&amp;gt;&#xD;
-    &amp;lt;dependency&amp;gt;&#xD;
-        &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-        &amp;lt;artifactId&amp;gt;spring-cloud-starter-netflix-eureka-client&amp;lt;/artifactId&amp;gt;&#xD;
-    &amp;lt;/dependency&amp;gt;&#xD;
-    ...&#xD;
-&amp;lt;/dependencies&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;or with Gradle:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint"&gt;buildscript {&#xD;
-    dependencies {&#xD;
-        classpath &amp;quot;io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE&amp;quot;&#xD;
-    }&#xD;
-}&#xD;
-&#xD;
-&#xD;
-&#xD;
-apply plugin: &amp;quot;io.spring.dependency-management&amp;quot;&#xD;
-&#xD;
-dependencyManagement {&#xD;
-    imports {&#xD;
-        mavenBom &amp;#39;org.springframework.cloud:spring-cloud-dependencies:Finchley.SR1&amp;#39;&#xD;
-    }&#xD;
-}&#xD;
-&#xD;
-dependencies {&#xD;
-    compile &amp;#39;org.springframework.cloud:spring-cloud-starter-config&amp;#39;&#xD;
-    compile &amp;#39;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&amp;#39;&#xD;
-    ...&#xD;
-}
-&lt;/code&gt;&lt;/pre&gt;</content>
-  </entry>
-  <entry>
-    <title>New Spring Integration, AMQP, Kafka Maintenance and Milestone Releases</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/08/01/new-spring-integration-amqp-kafka-maintenance-and-milestone-releases" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Gary Russell</name>
-    </author>
-    <id>tag:spring.io,2018-07-27:3343</id>
-    <updated>2018-08-01T17:21:23Z</updated>
-    <content type="html">&lt;div class="paragraph"&gt;
-&lt;p&gt;We are pleased to announce the following maintenance releases are now available.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;strong&gt;All users are encouraged to upgrade to these versions&lt;/strong&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-integration"&gt;&lt;a class="anchor" href="#spring-integration"&gt;&lt;/a&gt;Spring Integration&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-integration/releases/tag/v5.0.7.RELEASE"&gt;5.0.7.RELEASE&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-integration/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-integration"&gt;GitHub&lt;/a&gt; | &lt;a href="https://jira.spring.io/browse/INT"&gt;JIRA&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-integration/docs/5.0.7.RELEASE/reference/html"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-integration"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-integration"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-amqp-spring-for-rabbitmq"&gt;&lt;a class="anchor" href="#spring-amqp-spring-for-rabbitmq"&gt;&lt;/a&gt;Spring AMQP (Spring for RabbitMQ)&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-amqp/releases/tag/v2.0.5.RELEASE"&gt;2.0.5.RELEASE&lt;/a&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-amqp/releases/tag/v1.7.9.RELEASE"&gt;1.7.9.RELEASE&lt;/a&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-amqp/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-amqp"&gt;GitHub&lt;/a&gt; | &lt;a href="https://jira.spring.io/browse/AMQP"&gt;JIRA&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-amqp/docs/2.0.5.RELEASE/reference/html"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-amqp"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-amqp"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-for-apache-kafka"&gt;&lt;a class="anchor" href="#spring-for-apache-kafka"&gt;&lt;/a&gt;Spring for Apache Kafka&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-kafka/releases/tag/v2.1.8.RELEASE"&gt;2.1.8.RELEASE&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-kafka/releases/tag/v1.3.6.RELEASE"&gt;1.3.6.RELEASE&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-kafka/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-kafka"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-kafka/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-kafka/docs/2.1.8.RELEASE/reference/html/"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-kafka"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-kafka"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;strong&gt;In addition, the first milestones of the next generations are also available:&lt;/strong&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-integration-2"&gt;&lt;a class="anchor" href="#spring-integration-2"&gt;&lt;/a&gt;Spring Integration&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-integration/releases/tag/v5.1.0.M1"&gt;5.1.0.M1&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://docs.spring.io/spring-integration/docs/5.1.0.M1/reference/html/whats-new.html"&gt;What&amp;#8217;s New?&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-integration/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-integration"&gt;GitHub&lt;/a&gt; | &lt;a href="https://jira.spring.io/browse/INT"&gt;JIRA&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-integration/docs/5.1.0.M1/reference/html"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-integration"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-integration"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-amqp-spring-for-rabbitmq-2"&gt;&lt;a class="anchor" href="#spring-amqp-spring-for-rabbitmq-2"&gt;&lt;/a&gt;Spring AMQP (Spring for RabbitMQ)&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-amqp/releases/tag/v2.1.0.M1"&gt;2.1.0.M1&lt;/a&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://docs.spring.io/spring-amqp/docs/2.1.0.M1/reference/html/_introduction.html#_changes_in_2_1_since_2_0"&gt;What&amp;#8217;s New?&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-amqp/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-amqp"&gt;GitHub&lt;/a&gt; | &lt;a href="https://jira.spring.io/browse/AMQP"&gt;JIRA&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-amqp/docs/2.1.0.M1/reference/html"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-amqp"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-amqp"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-for-apache-kafka-2"&gt;&lt;a class="anchor" href="#spring-for-apache-kafka-2"&gt;&lt;/a&gt;Spring for Apache Kafka&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-kafka/releases/tag/v2.2.0.M1"&gt;2.2.0.M1&lt;/a&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://docs.spring.io/spring-kafka/docs/2.2.0.M1/reference/html/whats-new-part.html#spring-kafka-intro-new"&gt;What&amp;#8217;s New?&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-kafka/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-kafka"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-kafka/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-kafka/docs/2.1.8.RELEASE/reference/html/"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-kafka"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-kafka"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Integration for AWS 2.0.0.RC1 and Spring Cloud Stream Kinesis Binder 1.0.0.RC1</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/08/01/spring-integration-for-aws-2-0-0-rc1-and-spring-cloud-stream-kinesis-binder-1-0-0-rc1" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Artem Bilan</name>
-    </author>
-    <id>tag:spring.io,2018-08-01:3355</id>
-    <updated>2018-08-01T14:31:53Z</updated>
-    <content type="html">&lt;div class="paragraph"&gt;
-&lt;p&gt;Dear Spring Community!&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;It’s my pleasure to announce first Release Candidates for Spring projects supporting Amazon Web Services: &lt;a href="https://aws.amazon.com/"&gt;Amazon Web Services&lt;/a&gt;: &lt;a href="https://github.com/spring-projects/spring-integration-aws"&gt;Spring Integration for AWS&lt;/a&gt; &lt;code&gt;2.0.0.RC1&lt;/code&gt; and &lt;a href="https://github.com/spring-cloud/spring-cloud-stream-binder-aws-kinesis"&gt;Spring Cloud Stream Binder for AWS Kinesis&lt;/a&gt; &lt;code&gt;1.0.0.RC1&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;Both artifacts are available in the &lt;a href="https://repo.spring.io/milestone/"&gt;Spring Milestone&lt;/a&gt; repository and they can be consumed as maven dependencies:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="listingblock"&gt;
-&lt;div class="content"&gt;
-&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&amp;lt;dependency&amp;gt;
-    &amp;lt;groupId&amp;gt;org.springframework.integration&amp;lt;/groupId&amp;gt;
-    &amp;lt;artifactId&amp;gt;spring-integration-aws&amp;lt;/artifactId&amp;gt;
-    &amp;lt;version&amp;gt;2.0.0.RC1&amp;lt;/version&amp;gt;
-&amp;lt;/dependency&amp;gt;
-
-&amp;lt;dependency&amp;gt;
-    &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;
-    &amp;lt;artifactId&amp;gt;spring-cloud-stream-binder-kinesis&amp;lt;/artifactId&amp;gt;
-    &amp;lt;version&amp;gt;1.0.0.RC1&amp;lt;/version&amp;gt;
-&amp;lt;/dependency&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;Where the first one is not needed to be includes when the second one is in use.
-The &lt;a href="https://aws.amazon.com/kinesis/"&gt;AWS Kinesis&lt;/a&gt; and &lt;a href="https://aws.amazon.com/dynamodb/"&gt;AWS DynamoDB&lt;/a&gt; Java SDK dependencies are included transitively for AWS Kinesis Binder as well.
-And now &lt;a href="https://github.com/awslabs/dynamodb-lock-client"&gt;AWS DynamoDB Lock Client&lt;/a&gt; is also included for leader election.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;Big thanks to the community for contribution and any feedback and especially for the help in testing these products in the real projects.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;Here are changes since the previously announced &lt;a href="https://spring.io/blog/2018/04/17/spring-integration-for-aws-2-0-0-m2-and-spring-cloud-stream-kinesis-binder-1-0-0-m2"&gt;Milestone 2&lt;/a&gt;:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;A &lt;code&gt;DynamoDbLockRegistry&lt;/code&gt; implementation has been added for distributed locking based on the &lt;a href="https://github.com/awslabs/dynamodb-lock-client"&gt;AWS DynamoDB Lock Client&lt;/a&gt; foundation.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;The &lt;code&gt;KinesisMessageDrivenChannelAdapter&lt;/code&gt; can now be supplied with a &lt;code&gt;LockRegistry&lt;/code&gt; and exclusive access to shards before consuming.
-This way we ensure that only one consumer in a group reads records from the shard it is interested in.
-When one consumer goes (yields leadership), some other consumer may acquire a lock for the shard and continue to consume from the stored checkpoint.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Some other bug fixes and improvements in various components throughout the Spring Integration AWS project.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;The Kinesis Binder now exposes configuration properties for the underlying &lt;code&gt;DynamoDbLockRegistry&lt;/code&gt; used for binder consumers.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Some other fixes have been done in Kinesis Binder project as well.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;As usual any feedback, feature ideas, critics, bug reports and questions are welcome via appropriate communication channels!&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;We are aimed for GA release in a week or though.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="https://cloud.spring.io/spring-cloud-gcp"&gt;Spring Integration AWS Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-cloud/spring-cloud-stream-binder-aws-kinesis"&gt;Spring Cloud Stream Binder for AWS Kinesis Project Page&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-integration"&gt;Help&lt;/a&gt; | &lt;a href="https://gitter.im/spring-cloud/spring-cloud-stream"&gt;Chat&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Vault 2.1 M1 available now</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/08/01/spring-vault-2-1-m1-available-now" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Mark Paluch</name>
-    </author>
-    <id>tag:spring.io,2018-08-01:3353</id>
-    <updated>2018-08-01T10:40:17Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the community, I&amp;rsquo;m pleased to announce the availability of the first Spring Vault 2.1 milestone. This release ships with 47 tickets fixed and the highlights of this first milestone include:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Support for Google Cloud Compute and Google Cloud IAM authentication mechanism support.&lt;/li&gt;
-  &lt;li&gt;Integration of Vault&amp;rsquo;s versioned Key-Value backend through &lt;code&gt;VaultKeyValueOperations&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Template API for Vault&amp;rsquo;s wrapping endpoints.&lt;/li&gt;
-  &lt;li&gt;Support of full pull mode in reactive AppRole authentication. The limitation of previous versions has been lifted now.&lt;/li&gt;
-  &lt;li&gt;Improved Exception hierarchy for Vault login failures.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This release is compatible with Vault versions from &lt;code&gt;0.5.2&lt;/code&gt; up to &lt;code&gt;0.10.3&lt;/code&gt;.&lt;/p&gt;&lt;h2&gt;&lt;a href="#next-steps" class="anchor" name="next-steps"&gt;&lt;/a&gt;Next Steps&lt;/h2&gt;
-&lt;p&gt;Spring Vault 2.1 M1 will be picked up by the next Spring Cloud Vault 2.1 milestone. Our backlog contains a few more tickets that we want to ship with the upcoming release candidate of Spring Vault 2.1. It&amp;rsquo;s scheduled for early September. Expect a GA release for early October.&lt;/p&gt;
-&lt;p&gt;For a complete list of changes see the &lt;a href="http://docs.spring.io/spring-vault/docs/2.1.0.M1/changelog.txt"&gt;changelog&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-vault/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-vault"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-vault/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-vault/docs/2.1.0.M1/reference/html/"&gt;Documentation&lt;/a&gt; | &lt;a href="https://github.com/mp911de/spring-cloud-vault-config-samples/"&gt;Examples&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-vault"&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring IO Platform Cairo SR3</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/07/31/spring-io-platform-cairo-sr3" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Andy Wilkinson</name>
-    </author>
-    <id>tag:spring.io,2018-07-31:3352</id>
-    <updated>2018-07-31T13:20:32Z</updated>
-    <content type="html">&lt;p&gt;I am pleased to announce that &lt;a href="http://platform.spring.io/platform"&gt;Spring IO Platform&lt;/a&gt; Cairo-SR3 is now available from both &lt;a href="https://repo.spring.io/release"&gt;repo.spring.io&lt;/a&gt; and Maven Central. &lt;/p&gt;
-&lt;p&gt;This maintenance release upgrades the versions of a number of the projects in the Platform:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Spring AMQP 2.0.5&lt;/li&gt;
-  &lt;li&gt;Spring Boot 2.0.4&lt;/li&gt;
-  &lt;li&gt;Spring Data Kay SR9&lt;/li&gt;
-  &lt;li&gt;Spring Framework 5.0.8&lt;/li&gt;
-  &lt;li&gt;Spring HATEOAS 0.25.0&lt;/li&gt;
-  &lt;li&gt;Spring Integration 5.0.7&lt;/li&gt;
-  &lt;li&gt;Spring Kafka 2.1.8&lt;/li&gt;
-  &lt;li&gt;Spring REST Docs 2.0.2&lt;/li&gt;
-  &lt;li&gt;Spring Security 5.0.7&lt;/li&gt;
-  &lt;li&gt;Spring Session Apple SR4&lt;/li&gt;
-  &lt;li&gt;Spring Web Services 3.0.3&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The versions of a number of third-party dependencies have also been updated.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://platform.spring.io/platform"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-io/platform"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-io/platform/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/platform/docs/Cairo-SR3/reference/htmlsingle"&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

@@ -13,11 +13,11 @@ public class LoginService {
 		LoginStatusVO loginStatusVO = new LoginStatusVO();
 		if (vo != null) {
 			loginStatusVO.setStatus(true);
-			loginStatusVO.setMessage("Login succedd");
+			loginStatusVO.setMessage("Login succeed");
 			loginStatusVO.setLoginVO(vo);
 		} else {
 			loginStatusVO.setStatus(false);
-			loginStatusVO.setMessage("Login faild");
+			loginStatusVO.setMessage("Login failed");
 
 		}
 		return loginStatusVO;

@@ -8,14 +8,15 @@ import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +28,8 @@ import com.dac.onlineparking.module.exception.OnlineParkingGlobalException;
 @RestController
 public class LoginController {
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    
 	@Autowired
 	private LoginService loginService;
 	@Autowired
@@ -72,7 +75,7 @@ public class LoginController {
 	/*
 	 * 1111 is Success. 1112 is Mail not Found. 1113 is Error while sending mail
 	 */
-	@RequestMapping(value ="mvc/sendMail",method = RequestMethod.GET)
+	@RequestMapping(value = "mvc/sendMail", method = RequestMethod.GET)
 	public @ResponseBody ForgetResponseVO sendMail(@RequestParam("email") String email) {
 		ForgetResponseVO vo = new ForgetResponseVO();
 		synchronized (LoginController.class) {
@@ -86,6 +89,7 @@ public class LoginController {
 					infoVO.setOtp(code);
 					String key = UUID.randomUUID().toString().toUpperCase() + Calendar.getInstance().getTimeInMillis();
 					infoVO.setKey(key);
+					System.out.println("mail method " + key);
 					validateUser.put(key, infoVO);
 					vo.setKey(key);
 					emailCode.put(email, code);
@@ -114,16 +118,17 @@ public class LoginController {
 		}
 	}
 
-	@RequestMapping(value ="mvc/validateOtp",method = RequestMethod.GET)
-	public Boolean validateOtp(@RequestParam("otp") Integer otp, HttpServletRequest req, HttpServletResponse resp) {
+	@RequestMapping(value = "mvc/validateOtp", method = RequestMethod.GET)
+	public Boolean validateOtp(@RequestParam("otp") int otp, HttpServletRequest req, HttpServletResponse resp) {
 		String key = req.getHeader("fToken");
 		if (validateUser.containsKey(key)) {
 			if (verify.containsKey(otp)) {
 				String email = verify.get(otp);
-				Integer mapOtp = emailCode.get(email);
+				int mapOtp = emailCode.get(email);
 				if (mapOtp == otp) {
 					emailCode.remove(verify.get(otp));
 					verify.remove(otp);
+					System.out.println("comming....");
 					return true;
 				} else
 					return false;
@@ -138,6 +143,7 @@ public class LoginController {
 	public boolean resetPassword(HttpServletRequest req, HttpServletResponse resp,
 			@RequestParam("newPass") String newPass) {
 		String key = req.getHeader("fToken");
+		System.out.println("Header resert password " + key);
 		if (validateUser.containsKey(key)) {
 			ForgetPasswordInfoVO vo = validateUser.get(key);
 			return loginService.resetPassword(vo.getEmail(), newPass);

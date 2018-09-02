@@ -16,11 +16,24 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
+	/**
+	 * @param HttpServletRequest
+	 * @return List<CityVO>
+	 * @throws Exception
+	 * @author Anil D. Ingle
+	 */
 	@RequestMapping(value = "mvc/city", method = RequestMethod.GET)
 	public @ResponseBody List<CityVO> selectCity(HttpServletRequest request) {
 		return adminService.selectCity();
 	}
 
+	/**
+	 * @param HttpServletRequest
+	 * @param RegisterVO
+	 * @return boolean
+	 * @throws Exception
+	 * @author Anil D. Ingle
+	 */
 	@RequestMapping(value = "mvc/registration", method = RequestMethod.POST)
 	public @ResponseBody boolean register(HttpServletRequest request, @RequestBody RegisterVO vo) {
 		return adminService.register(vo);

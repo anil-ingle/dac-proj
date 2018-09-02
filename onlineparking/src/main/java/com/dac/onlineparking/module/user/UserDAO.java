@@ -5,182 +5,267 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import com.dac.onlineparking.util.CommonUtil;
 import com.dac.onlineparking.util.UserQuery;
 
 @Repository
 public class UserDAO {
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+
+	/**
+	 * @param areaId
+	 * @return List<CityAreaVO>
+	 * @throws Exception
+	 * @author Anil D. Ingle 
+	 * 	 
+	 */
 	public List<CityAreaVO> selectCityArea(int areaId) {
-		List<CityAreaVO> areaVOs = jdbcTemplate.query(UserQuery.SLECT_CITY_AREA, (ResultSet rs) -> {
-			List<CityAreaVO> areaVOs1 = new ArrayList<CityAreaVO>();
-			while (rs.next()) {
-				CityAreaVO areaVO = new CityAreaVO();
-				areaVO.setAreaId(rs.getInt("area_id"));
-				areaVO.setAreaName(rs.getString("area_name"));
-				areaVOs1.add(areaVO);
-			} // while
-			return areaVOs1;
-		}// extractData(-)
-				, areaId);
-
-		return areaVOs;
+		try {
+			List<CityAreaVO> areaVOs = jdbcTemplate.query(UserQuery.SLECT_CITY_AREA, (ResultSet rs) -> {
+				List<CityAreaVO> areaVOs1 = new ArrayList<CityAreaVO>();
+				while (rs.next()) {
+					CityAreaVO areaVO = new CityAreaVO();
+					areaVO.setAreaId(rs.getInt("area_id"));
+					areaVO.setAreaName(rs.getString("area_name"));
+					areaVOs1.add(areaVO);
+				} // while
+				return areaVOs1;
+			}// extractData(-)
+					, areaId);
+			return areaVOs;
+		} catch (Exception e) {
+			log.error("An error occurred while Fetching CityArea . Please contact the Support Team.", e);
+			throw e;
+		}
 	}
 
+	/**
+	 * @param areaId
+	 * @return List<UserBookSlotVO>
+	 * @throws Exception
+	 * @author Anil D. Ingle 
+	 * 	 
+	 */
 	public List<UserBookSlotVO> getAreaSlot(Integer areaId) {
-		List<UserBookSlotVO> bookSlotVO = jdbcTemplate.query(UserQuery.SELECT_AREASLOT, (ResultSet rs) -> {
-			List<UserBookSlotVO> bookSlotVO1 = new ArrayList<UserBookSlotVO>();
-			while (rs.next()) {
-				UserBookSlotVO vo = new UserBookSlotVO();
-				vo.setSlotId(rs.getInt("id"));
-				vo.setSlotNumber(rs.getInt("slot_number"));
-				vo.setIsReserved(rs.getInt("is_reserved"));
-				vo.setfSlotId(rs.getInt("fslot_id"));
-				bookSlotVO1.add(vo);
-			} // while
-			return bookSlotVO1;
-		}// extractData(-)
-				, areaId);
-
-		return bookSlotVO;
+		try {
+			List<UserBookSlotVO> bookSlotVO = jdbcTemplate.query(UserQuery.SELECT_AREASLOT, (ResultSet rs) -> {
+				List<UserBookSlotVO> bookSlotVO1 = new ArrayList<UserBookSlotVO>();
+				while (rs.next()) {
+					UserBookSlotVO vo = new UserBookSlotVO();
+					vo.setSlotId(rs.getInt("id"));
+					vo.setSlotNumber(rs.getInt("slot_number"));
+					vo.setIsReserved(rs.getInt("is_reserved"));
+					vo.setfSlotId(rs.getInt("fslot_id"));
+					bookSlotVO1.add(vo);
+				} // while
+				return bookSlotVO1;
+			}// extractData(-)
+					, areaId);
+			return bookSlotVO;
+		} catch (Exception e) {
+			log.error("An error occurred while Booking Slot . Please contact the Support Team.", e);
+			throw e;
+		}
 	}
 
+	/**
+	 * @param WolletBookVO
+	 * @return int
+	 * @throws SQLException
+	 * @author Anil D. Ingle 
+	 * 	 
+	 */
+	
 	public int slotBookUsingWolet(WolletBookVO bookVO) throws SQLException {
-		int statusForWolet = 0;
-		boolean paymentFlag = this.userWoletDeduction(bookVO);
-		if (paymentFlag) {
-			boolean statusRecord = this.recordOwnerWoller(bookVO);
-			if (statusRecord) {
-
-				boolean flag = this.slotBook(bookVO.getBookedSlots(), bookVO.getAreaId());
-
-				if (flag) {
-
-					statusForWolet = jdbcTemplate.update(UserQuery.USER_BOOK_HISTORY, bookVO.getUserId(),
-							bookVO.getBookedSlots(), bookVO.getAreaId(), bookVO.getwBill(), bookVO.getTimeTaken(),
-							new Date() + "");
-
+		try {
+			int statusForWolet = 0;
+			boolean paymentFlag = this.userWoletDeduction(bookVO);
+			if (paymentFlag) {
+				boolean statusRecord = this.recordOwnerWoller(bookVO);
+				if (statusRecord) {
+					boolean flag = this.slotBook(bookVO.getBookedSlots(), bookVO.getAreaId());
+					if (flag) {
+						statusForWolet = jdbcTemplate.update(UserQuery.USER_BOOK_HISTORY, bookVO.getUserId(),
+								bookVO.getBookedSlots(), bookVO.getAreaId(), bookVO.getwBill(), bookVO.getTimeTaken(),
+								new Date() + "");
+					}
 				}
 			}
+			return statusForWolet;
+		} catch (Exception e) {
+			log.error("An error occurred while fetching Status for wallet . Please contact the Support Team.", e);
+			throw e;
 		}
-
-		return statusForWolet;
-
 	}
-
+	/**
+	 * @param WolletBookVO
+	 * @return boolean
+	 * @throws Exception
+	 * @author Anil D. Ingle 
+	 * 	 
+	 */
 	private boolean userWoletDeduction(WolletBookVO bookVO) {
 		boolean flag = true;
-
-		// execute the query
-		int ret = jdbcTemplate.update(UserQuery.USER_WOLLET_DEDUCTION, (bookVO.getwTotal() - bookVO.getwBill()),
-				bookVO.getUserId());
-
-		if (ret == 0) {
-			flag = false;
-
+		try {
+			// execute the query
+			int ret = jdbcTemplate.update(UserQuery.USER_WOLLET_DEDUCTION, (bookVO.getwTotal() - bookVO.getwBill()),
+					bookVO.getUserId());
+			if (ret == 0) {
+				flag = false;
+			}
+		} catch (Exception e) {
+			log.error("An error occurred while User wallet deduction . Please contact the Support Team.", e);
+			throw e;
 		}
-
 		return flag;
 	}
-
+	/**
+	 * @param WolletBookVO
+	 * @return boolean
+	 * @throws Exception
+	 * @author Anil D. Ingle 
+	 * 	 
+	 */
 	private boolean recordOwnerWoller(WolletBookVO bookVO) {
-		WolletStatusVO statusVO = this.creditOwnerWollet(bookVO);
+		WolletStatusVO statusVO = null;
 		boolean statusRecord = false;
-		if (statusVO.isSuccess()) {
+		try {
+			statusVO = this.creditOwnerWollet(bookVO);
+		} catch (Exception e) {
+			log.error("An error occurred while call. creditOwnerWollet . Please contact the Support Team.", e);
+			throw e;
+		}
 
-			// execute the query
-			int ret = jdbcTemplate.update(UserQuery.OWNER_RECORD, bookVO.getUserId(), new Date() + "",
-					bookVO.getwBill(), statusVO.getOwnerId(), 0);
-
-			if (ret == 1) {
-				statusRecord = true;
-
+		try {
+			if (statusVO.isSuccess()) {
+				// execute the query
+				int ret = jdbcTemplate.update(UserQuery.OWNER_RECORD, bookVO.getUserId(), new Date() + "",
+						bookVO.getwBill(), statusVO.getOwnerId(), 0);
+				if (ret == 1) {
+					statusRecord = true;
+				}
 			}
-
+		} catch (Exception e) {
+			log.error("An error occurred while User recordOwnerWoller . Please contact the Support Team.", e);
+			throw e;
 		}
 		return statusRecord;
-
 	}
-
+	/**
+	 * @param WolletBookVO
+	 * @return WolletStatusVO
+	 * @throws Exception
+	 * @author Anil D. Ingle 
+	 * 	 
+	 */
 	private WolletStatusVO creditOwnerWollet(WolletBookVO bookVO) {
-		WolletStatusVO statusVO = this.getOwnerWolletAmount(bookVO);
-		statusVO.setSuccess(false);
-		if (statusVO.getOwnerId() != 0) {
-
-			// execute the query
-			int ret = jdbcTemplate.update(UserQuery.CREDIT_OWNER_WOLLET, (statusVO.getAmount() + bookVO.getwBill()),
-					statusVO.getOwnerId());
-
-			if (ret == 1) {
-				statusVO.setSuccess(true);
-
+		WolletStatusVO statusVO = null;
+		try {
+			statusVO = this.getOwnerWolletAmount(bookVO);
+			statusVO.setSuccess(false);
+			if (statusVO.getOwnerId() != 0) {
+				// execute the query
+				int ret = jdbcTemplate.update(UserQuery.CREDIT_OWNER_WOLLET, (statusVO.getAmount() + bookVO.getwBill()),
+						statusVO.getOwnerId());
+				if (ret == 1) {
+					statusVO.setSuccess(true);
+				}
 			}
-
+		} catch (Exception e) {
+			log.error("An error occurred while User creditOwnerWallet . Please contact the Support Team.", e);
+			throw e;
 		}
-
 		return statusVO;
 
 	}
-
+	/**
+	 * @param WolletBookVO
+	 * @return WolletStatusVO
+	 * @throws Exception
+	 * @author Anil D. Ingle 
+	 * 	 
+	 */
 	private WolletStatusVO getOwnerWolletAmount(WolletBookVO bookVO) {
-
-		// execute the query
-
-		List<WolletStatusVO> list = jdbcTemplate.query(UserQuery.OWNER_WOLET_AMOUNT, (ResultSet rs) -> {
-			List<WolletStatusVO> wList = new ArrayList<WolletStatusVO>();
-			while (rs.next()) {
-				WolletStatusVO vo = new WolletStatusVO();
-
-				vo.setOwnerId(rs.getInt("ownerId"));
-				vo.setAmount(rs.getDouble("amount"));
-				wList.add(vo);
-			} // while
-			return wList;
-		}// extractData(-)
-				, bookVO.getAreaId());
+		List<WolletStatusVO> list = null;
+		try {
+			// execute the query
+			list = jdbcTemplate.query(UserQuery.OWNER_WOLET_AMOUNT, (ResultSet rs) -> {
+				List<WolletStatusVO> wList = new ArrayList<WolletStatusVO>();
+				while (rs.next()) {
+					WolletStatusVO vo = new WolletStatusVO();
+					vo.setOwnerId(rs.getInt("ownerId"));
+					vo.setAmount(rs.getDouble("amount"));
+					wList.add(vo);
+				} // while
+				return wList;
+			}// extractData(-)
+					, bookVO.getAreaId());
+		} catch (Exception e) {
+			log.error("An error occurred while User Getting Owner wallet Amount . Please contact the Support Team.", e);
+			throw e;
+		}
 		if (list.size() == 1) {
 			return list.get(0);
 		} else
-
 			return null;
-
 	}
-
+	/**
+	 * @param String
+	 *  @param Integer
+	 * @return boolean
+	 * @throws SQLException
+	 * @author Anil D. Ingle 
+	 * 	 
+	 */
 	private boolean slotBook(String bookedSlots, Integer areaId) throws SQLException {
-		List<Integer> ids = CommonUtil.csvIds(bookedSlots);
+		List<Integer> ids = null;
 		boolean flag = true;
-
-		for (Integer id : ids) {
-
-			// execute the query
-			int ret = jdbcTemplate.update(UserQuery.BOOK_SLOTS, areaId, id);
-
-			if (ret == 0) {
-				flag = false;
-
+		try {
+			ids = CommonUtil.csvIds(bookedSlots);
+			for (Integer id : ids) {
+				// execute the query
+				int ret = jdbcTemplate.update(UserQuery.BOOK_SLOTS, areaId, id);
+				if (ret == 0) {
+					flag = false;
+				}
 			}
-
+		} catch (Exception e) {
+			log.error("An error occurred while User Booking Slot . Please contact the Support Team.", e);
+			throw e;
 		}
-
 		return flag;
-
 	}
 
+	/**
+	 * @param int
+	 * @return WalletMoneyVO
+	 * @throws Exception
+	 * @author Anil D. Ingle
+	 * 
+	 */
 	public WalletMoneyVO walletMoney(int userId) {
-		WalletMoneyVO vo = jdbcTemplate.queryForObject(UserQuery.USER_WALLET_MONEY, (ResultSet rs, int index) -> {
-			WalletMoneyVO evo = new WalletMoneyVO();
-			evo.setWalletId(rs.getInt("id"));
-			evo.setTotalAmount(rs.getDouble("totalamount"));
-			return evo;
-		}// mapRow
-				, userId);
+		WalletMoneyVO vo = null;
+		try {
+			vo = jdbcTemplate.queryForObject(UserQuery.USER_WALLET_MONEY, (ResultSet rs, int index) -> {
+				WalletMoneyVO evo = new WalletMoneyVO();
+				evo.setWalletId(rs.getInt("id"));
+				evo.setTotalAmount(rs.getDouble("totalamount"));
+				return evo;
+			}// mapRow
+					, userId);
+		} catch (Exception e) {
+			log.error("An error occurred while getting walletMoney . Please contact the Support Team.", e);
+			throw e;
+		}
 		return vo;
 	}// method
 }
